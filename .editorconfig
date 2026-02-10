@@ -1,0 +1,51 @@
+# Hitesh_Lakhani
+# .editorconfig — Project-wide rules
+root = true
+
+# ---------------- Global rules ----------------
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+trim_trailing_whitespace = true
+
+# keep trailing whitespace in markdown for readability
+[*.md]
+trim_trailing_whitespace = false
+
+# ---------------- React / JS / TS ----------------
+[*.{js,jsx,ts,tsx,json,css,scss,html}]
+indent_style = space
+indent_size = 4
+tab_width = 4
+
+# ---------------- Python / FastAPI ----------------
+[*.py]
+indent_style = space
+indent_size = 4
+tab_width = 4
+max_line_length = 88
+
+# ---------------- Shell scripts ----------------
+[*.sh]
+indent_style = space
+indent_size = 2
+tab_width = 2
+
+# ---------------- PowerShell ----------------
+[*.ps1]
+indent_style = space
+indent_size = 4
+tab_width = 4
+
+# ---------------- Config files ----------------
+[*.{yml,yaml,ini,cfg,conf,toml}]
+indent_style = space
+indent_size = 2
+tab_width = 2
+
+# ---------------- Docker ----------------
+[Dockerfile]
+indent_style = space
+indent_size = 2
+tab_width = 2
