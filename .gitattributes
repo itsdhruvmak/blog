@@ -1,0 +1,79 @@
+# ---------------- Global — enforce LF ----------------
+* text=auto eol=lf
+
+# ---------------- Source code ----------------
+# Javascript
+*.js       text
+*.jsx      text
+*.ts       text
+*.tsx      text
+*.json     text
+*.html     text
+*.css      text
+*.scss     text
+
+# Python
+*.py       text
+*.pyi      text
+*.py.mako  text
+*.mako     text
+
+# Config / infra
+*.yml      text
+*.yaml     text
+*.toml     text
+*.ini      text
+*.cfg      text
+*.conf     text
+*.env      text
+*.example  text
+
+# Shell / scripts
+*.sh       text
+*.bash     text
+*.zsh      text
+*.ps1      text
+*.cmd      text
+*.bat      text
+
+# Docker
+Dockerfile text
+*.dockerfile text
+
+# Docs
+*.md       text
+*.rst      text
+*.txt      text
+
+# Logs (if tracked)
+*.log      text
+
+# ---------------- Binary files — no normalize ----------------
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.svg      binary
+*.ico      binary
+*.webp     binary
+
+*.pdf      binary
+*.zip      binary
+*.tar      binary
+*.gz       binary
+*.7z       binary
+
+*.mp4      binary
+*.mov      binary
+*.avi      binary
+
+*.exe      binary
+*.dll      binary
+*.so       binary
+*.dylib    binary
+*.bin      binary
+
+# ---------------- Certs / keys ----------------
+*.pem      binary
+*.crt      binary
+*.key      binary
