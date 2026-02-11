@@ -18,13 +18,23 @@ app.use(cors({
 }));
 app.use(cookieParser())
 
-app.get("/", (res) => {
+app.get("/", (req, res) => {
     res.send("hey i'm working")
 })
 
 app.use("/api/items", itemRouter)
 app.use("/api/auth", authRouter)
 
-connectDB().then(() => {
-    app.listen(PORT, console.log(`Hey i'm woroking on PORT ${PORT}`))
-})
+// Connect to database
+connectDB()
+
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 8080
+    app.listen(PORT, () => {
+        console.log(`Hey i'm working on PORT ${PORT}`)
+    })
+}
+
+// Export for Vercel serverless
+export default app
