@@ -1,5 +1,5 @@
 import imagekit from "../config/imageKit.js"
-import Item from "../config/model/item.js"
+import Item from "../config/model/Item.js"
 
 export const createProduct = async (req, res) => {
     try {
