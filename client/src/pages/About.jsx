@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import cerrogordo from "../assets/cerrogordo.png"
-import rightMessage from "../assets/rightMessage.png"
-import manyChat from "../assets/manyChat-1.png"
+import rightMessage from "../assets/rightmessage.png"
+import manyChat from "../assets/manychat-1.png"
 import ropig from "../assets/ropig-1.png"
 import hotel from "../assets/hotel-cover.jpg"
 import blogVideo from "../assets/blogVideo.jpg"
