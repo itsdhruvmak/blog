@@ -16,6 +16,8 @@ import cookieParser from 'cookie-parser'
 const app = express()
 const PORT = process.env.PORT || 8080
 
+app.use(express.json());
+
 app.use(cors({
     origin: function (origin, callback) {
         // 1. Allow requests with no origin (like mobile apps or curl)
