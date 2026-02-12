@@ -1,5 +1,12 @@
 import 'dotenv/config'
 import express from 'express'
+
+const requiredEnv = ['MONGO_URI', 'ADMIN_PASSWORD', 'JWT_SECRET'];
+requiredEnv.forEach(env => {
+    if (!process.env[env]) {
+        console.error(`CRITICAL: ${env} is missing from environment variables`);
+    }
+});
 import connectDB from './config/db.js'
 import itemRouter from './routes/itemRoutes.js'
 import authRouter from './routes/authRoutes.js'
@@ -49,6 +56,16 @@ if (process.env.NODE_ENV !== 'production') {
         console.log(`Hey i'm working on PORT ${PORT}`)
     })
 }
+
+// Global error handler
+app.use((err, req, res, next) => {
+    console.error("Global Error Handler:", err);
+    res.status(500).json({
+        message: "Internal Server Error",
+        error: err.message,
+        stack: process.env.NODE_ENV !== 'production' ? err.stack : undefined
+    });
+});
 
 // Export for Vercel serverless
 export default app
