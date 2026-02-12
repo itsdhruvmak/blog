@@ -16,22 +16,21 @@ import cookieParser from 'cookie-parser'
 const app = express()
 const PORT = process.env.PORT || 8080
 
-app.use(express.json())
-const allowedOrigins = [
-    process.env.CLIENT_URL,
-    'https://blog-eight-rouge-21.vercel.app',
-    'http://localhost:5173'
-];
-
 app.use(cors({
     origin: function (origin, callback) {
+        // 1. Allow requests with no origin (like mobile apps or curl)
         if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            var msg = 'The CORS policy for this site does not ' +
-                'allow access from the specified Origin.';
-            return callback(new Error(msg), false);
+
+        // 2. Trust ALL Vercel domains and Localhost
+        const isVercel = origin.endsWith('.vercel.app');
+        const isLocal = origin.startsWith('http://localhost');
+
+        if (isVercel || isLocal) {
+            return callback(null, true);
+        } else {
+            console.error("CORS Blocked Origin:", origin);
+            return callback(new Error('CORS policy mismatch'), false);
         }
-        return callback(null, true);
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
