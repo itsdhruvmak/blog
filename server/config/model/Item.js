@@ -5,7 +5,8 @@ const itemSchema = new mongoose.Schema({
     subCategory: { type: String, required: true },
     name: { type: String, required: true },
     description: { type: String },
-    image: { type: String }
+    image: { type: String },
+    isDeleted: { type: Boolean, default: false }
 })
 
 const Item = mongoose.model("Item", itemSchema)

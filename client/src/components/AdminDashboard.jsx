@@ -88,9 +88,19 @@ const AdminDashboard = () => {
         }
     };
 
+    const handleDeleteProduct = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+        try {
+            await api.delete(`/api/items/delete/${id}`);
+            fetchProducts();
+        } catch (err) {
+            alert(err.response?.data?.message || "Delete failed");
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#F8FAFC] pb-20">
-            {/* Header Sticky Bar */}
             {/* Header Sticky Bar */}
             <div className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200">
                 <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -252,7 +262,10 @@ const AdminDashboard = () => {
                                         >
                                             <Edit3 size={18} />
                                         </button>
-                                        <button className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all">
+                                        <button
+                                            onClick={() => handleDeleteProduct(item._id)}
+                                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
+                                        >
                                             <Trash2 size={18} />
                                         </button>
                                     </div>

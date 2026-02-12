@@ -75,9 +75,24 @@ export const editProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try {
-        const items = await Item.find()
+        const items = await Item.find({ isDeleted: false })
         return res.status(200).json({ message: "Items fetched successfully", data: items })
     } catch (error) {
         return res.status(500).json({ message: "Internal server error", error: error.message })
+    }
+}
+
+export const deleteProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const item = await Item.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+
+        if (!item) {
+            return res.status(404).json({ message: "Item not found" });
+        }
+
+        return res.status(200).json({ message: "Item deleted successfully", data: item });
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error", error: error.message });
     }
 }
