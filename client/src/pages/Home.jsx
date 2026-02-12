@@ -45,65 +45,98 @@ export default function Home() {
     return (
         <div className="flex flex-col min-h-screen overflow-x-hidden">
 
-            {/* Hero Section */}
-            <section className="flex flex-col items-center justify-center pt-20 pb-12 md:pt-24 md:pb-16 px-4 text-center">
-                <div className="container px-4 md:px-6">
+            {/* Modern Hero Section */}
+            <section className="relative overflow-hidden pt-8 pb-20 lg:pt-12 lg:pb-28 px-4 lg:pl-24 xl:pl-32 lg:pr-24 xl:pr-32">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10">
+                    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-50/50 blur-[120px]" />
+                    <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] rounded-full bg-orange-50/50 blur-[100px]" />
+                </div>
+
+                <div className="container mx-auto max-w-screen-2xl">
                     <motion.div
                         variants={staggerContainer}
                         initial="hidden"
-                        animate="visible"
-                        className="flex flex-col items-center space-y-8"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
                     >
-                        {/* Profile Image with subtle floating effect */}
+                        {/* Left Content */}
+                        <div className="lg:col-span-7 text-left space-y-8">
+                            <motion.div variants={fadeInUp} className="space-y-4">
+                                <span className="inline-block py-1 px-3 rounded-full bg-black/5 text-sm font-semibold tracking-wide uppercase">
+                                    Founder of Kit
+                                </span>
+                                <h1 className="text-5xl lg:text-8xl font-black leading-[1.1] tracking-tight text-slate-900">
+                                    Design. Build. <br />
+                                    <span className="bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">
+                                        Repeat.
+                                    </span>
+                                </h1>
+                                <p className="text-lg md:text-xl text-slate-600 max-w-xl leading-relaxed">
+                                    I’m Hitesh Lakhani—a creator, author, and designer. I like to build audiences and companies.Right now 110% of my time is focused on building Kit: the operating system for creators who mean business.
+                                </p>
+                            </motion.div>
+
+                            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
+                                <Link to="/books-products">
+                                    <motion.button
+                                        whileHover={{ y: -2 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="group flex cursor-pointer items-center gap-3 bg-black text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-black/20 hover:bg-zinc-800 transition-all"
+                                    >
+                                        Explore My Work
+                                        <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                                    </motion.button>
+                                </Link>
+                                <Link to="/blog">
+                                    <motion.button
+                                        whileHover={{ backgroundColor: "#f8fafc" }}
+                                        className="px-8 py-4 cursor-pointer rounded-full font-bold border-2 border-slate-200 text-slate-900 transition-colors"
+                                    >
+                                        Read the Blog
+                                    </motion.button>
+                                </Link>
+                            </motion.div>
+                        </div>
+
+                        {/* Right Image Feature */}
                         <motion.div
                             variants={fadeInUp}
-                            animate={{ y: [0, -10, 0] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                            className="relative w-32 h-32 md:w-40 md:h-40 mx-auto mb-6 rounded-full overflow-hidden border-4 shadow-xl"
+                            className="lg:col-span-5 relative"
                         >
-                            <img src={userImage} alt="NATHAN BARRY" className="object-cover w-full h-full" />
-                        </motion.div>
-
-                        <motion.div variants={fadeInUp} className="space-y-4">
-                            <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-                                Hello, I'm Nathan Barry.
-                            </h1>
-                            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                                I’m a creator, author, speaker, designer, and the founder of Kit.
-                            </p>
-                        </motion.div>
-
-                        <motion.div variants={fadeInUp} className="flex flex-col gap-4 min-[400px]:flex-row">
-                            <Link to="/books-products">
-                                <motion.button
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition cursor-pointer"
+                            <div className="relative z-10 w-full aspect-square md:max-w-md mx-auto">
+                                {/* Main Image Container */}
+                                <motion.div
+                                    animate={{ y: [0, -15, 0] }}
+                                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                                    className="w-full h-full rounded-3xl overflow-hidden border-[12px] border-white shadow-2xl rotate-2"
                                 >
-                                    Explore Work
-                                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                                </motion.button>
-                            </Link>
-                            <Link to="/blog">
-                                <motion.button
-                                    whileHover={{ backgroundColor: "#f3f4f6" }}
-                                    className="border px-6 py-3 cursor-pointer rounded-lg font-medium transition"
+                                    <img src={userImage} alt="Hitesh Lakhani" className="object-cover w-full h-full scale-105" />
+                                </motion.div>
+
+                                {/* Floating Stats/Badge Card */}
+                                <motion.div
+                                    initial={{ opacity: 0, x: 20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.5 }}
+                                    className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hidden md:block"
                                 >
-                                    Read Blog
-                                </motion.button>
-                            </Link>
+                                    <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Recent Book</p>
+                                    <p className="text-lg font-extrabold text-slate-900">The I Am A Creator</p>
+                                </motion.div>
+                            </div>
                         </motion.div>
                     </motion.div>
                 </div>
             </section>
 
-            {/* About/Design Section - Aligned to the Grid */}
+            {/* Intro Section - Adjusted margins */}
             <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 variants={staggerContainer}
-                className="mt-12 mb-24 max-w-screen-2xl mx-auto px-4 lg:pl-24 xl:pl-32 text-left"
+                className="mt-12 mb-8 md:mb-12 max-w-screen-2xl mx-auto px-4 lg:pl-24 xl:pl-32 text-left"
             >
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
                     <motion.div variants={fadeInUp} className="md:col-span-5">
@@ -137,13 +170,13 @@ export default function Home() {
                 </div>
             </motion.div>
 
-            {/* Kit Founder Section - Aligned to Grid */}
+            {/* Kit Founder Section - Adjusted padding */}
             <motion.section
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={staggerContainer}
-                className="bg-[#fafafa] py-24 px-4"
+                className="bg-[#fafafa] pt-12 pb-8 md:pb-12 px-4"
             >
                 <div className="max-w-screen-2xl mx-auto lg:pl-24 xl:pl-32 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
                     <motion.div variants={fadeInUp} className="md:col-span-8 space-y-6">
@@ -159,110 +192,189 @@ export default function Home() {
                 </div>
             </motion.section>
 
-            <section className="relative py-24 px-6 overflow-hidden bg-[#fafafa]">
-                <div className="absolute top-0 left-1/4 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-                <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+            {/* Reviews/Stats Section */}
+            <section className="relative py-8 md:py-12 px-4 lg:pl-24 xl:pl-32 lg:pr-24 xl:pr-32 bg-white overflow-hidden">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
 
-                <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    variants={staggerContainer}
-                    className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 place-items-center relative z-10"
-                >
-                    <motion.div
-                        variants={fadeInUp}
-                        whileHover={{ y: -10, transition: { duration: 0.2 } }}
-                        className="group relative bg-white/40 backdrop-blur-md border border-white/20 p-10 w-full h-72 flex flex-col justify-center items-center rounded-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]"
-                    >
-                        <div className="text-blue-600 mb-2 font-mono text-sm tracking-widest font-bold uppercase opacity-60">Legacy</div>
-                        <h3 className="text-4xl font-bold text-slate-900 tracking-tight">2013</h3>
-                        <p className="text-slate-600 text-sm mt-1 text-center font-medium">Started as side project</p>
-
-                        <div className="h-px w-12 bg-slate-200 my-6"></div>
-
-                        <h3 className="text-4xl font-bold text-slate-900 tracking-tight">100%</h3>
-                        <p className="text-slate-600 text-sm mt-1 font-medium">Bootstrapped</p>
-                    </motion.div>
-                    <motion.div
-                        variants={fadeInUp}
-                        whileHover={{ y: -10, transition: { duration: 0.2 } }}
-                        className="group relative bg-white/60 backdrop-blur-lg border border-white/40 p-10 w-full h-80 flex flex-col justify-center items-center rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.04)] md:-mt-8"
-                    >
-                        <div className="text-green-600 mb-2 font-mono text-sm tracking-widest font-bold uppercase opacity-60">Growth</div>
-                        <h3 className="text-5xl font-bold text-slate-900 tracking-tight">$45M+</h3>
-                        <p className="text-slate-600 text-base mt-1 font-medium italic">Annual revenue</p>
-
-                        <div className="h-px w-16 bg-slate-200 my-6"></div>
-
-                        <h3 className="text-4xl font-bold text-slate-900 tracking-tight">$5M+</h3>
-                        <p className="text-slate-600 text-sm mt-1 font-medium">Annual profit</p>
-
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
-                    </motion.div>
-
-                    <motion.div
-                        variants={fadeInUp}
-                        whileHover={{ y: -10, transition: { duration: 0.2 } }}
-                        className="group relative bg-white/40 backdrop-blur-md border border-white/20 p-10 w-full h-72 flex flex-col justify-center items-center rounded-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.07)]"
-                    >
-                        <div className="text-orange-600 mb-2 font-mono text-sm tracking-widest font-bold uppercase opacity-60">Impact</div>
-                        <h3 className="text-4xl font-bold text-slate-900 tracking-tight">95+</h3>
-                        <p className="text-slate-600 text-sm mt-1 text-center font-medium px-4">Team members globally</p>
-
-                        <div className="h-px w-12 bg-slate-200 my-6"></div>
-
-                        <h3 className="text-4xl font-bold text-slate-900 tracking-tight">$10M+</h3>
-                        <p className="text-slate-600 text-sm mt-1 font-medium">Profit shared</p>
-                    </motion.div>
-                </motion.div>
-            </section>
-
-            <section className="py-24 px-6 bg-[#f1f4f6]">
-                <div className="max-w-6xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14"
-                    >
-                        <div>
-                            <p className="text-xs tracking-[0.25em] text-blue-900 uppercase mb-4">I TEACH EVERYTHING I KNOW.</p>
-                            <h2 className="text-4xl md:text-5xl font-serif text-slate-900 leading-tight">
-                                <span className="underline decoration-2">Become a creator</span> <br />
-                                and <span className="underline decoration-2">grow your audience.</span>
-                            </h2>
-                        </div>
-                        <a href="#" className="flex items-center gap-2 text-sm italic text-slate-800 hover:opacity-70 transition">more recent articles →</a>
-                    </motion.div>
-
+                <div className="max-w-screen-2xl mx-auto relative z-10">
                     <motion.div
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
                         variants={staggerContainer}
-                        className="grid md:grid-cols-2 gap-12"
+                        className="grid grid-cols-2 md:flex md:flex-row justify-between items-start gap-y-8 md:gap-y-12 gap-x-6 md:gap-4"
                     >
-                        {posts.map((post) => (
-                            <motion.div variants={fadeInUp} key={post.id} className="space-y-4 group cursor-pointer">
-                                <div className="aspect-video overflow-hidden rounded-lg">
-                                    <img src={blogVideo} alt={post.title} className="w-full h-full object-cover transition group-hover:scale-105" />
+                        {/* Founded */}
+                        <motion.div variants={fadeInUp} className="flex-1 group">
+                            <div className="space-y-1">
+                                <p className="text-blue-600 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80">
+                                    Founded
+                                </p>
+                                <div className="flex items-baseline gap-1">
+                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">2013</h3>
                                 </div>
-                                <div className="text-sm text-gray-400">Episode {post.episode} • {post.date}</div>
-                                <h3 className="text-xl font-semibold group-hover:text-gray-900 transition">{post.title}</h3>
-                            </motion.div>
-                        ))}
+                                <p className="text-slate-500 text-xs md:text-sm font-medium max-w-[160px] leading-snug">
+                                    From side project to creator powerhouse.
+                                </p>
+                            </div>
+                        </motion.div>
+
+                        <div className="hidden md:block h-16 w-px bg-slate-100 self-center"></div>
+
+                        {/* Revenue */}
+                        <motion.div variants={fadeInUp} className="flex-1 group">
+                            <div className="space-y-1">
+                                <p className="text-emerald-600 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80">
+                                    Revenue
+                                </p>
+                                <div className="flex items-baseline gap-1">
+                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">$45M</h3>
+                                    <span className="text-lg font-bold text-slate-400">+</span>
+                                </div>
+                                <p className="text-slate-500 text-xs md:text-sm font-medium max-w-[160px] leading-snug">
+                                    Annual revenue with zero outside funding.
+                                </p>
+                            </div>
+                        </motion.div>
+
+                        <div className="hidden md:block h-16 w-px bg-slate-100 self-center"></div>
+
+                        {/* The Team */}
+                        <motion.div variants={fadeInUp} className="flex-1 group">
+                            <div className="space-y-1">
+                                <p className="text-orange-600 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80">
+                                    The Team
+                                </p>
+                                <div className="flex items-baseline gap-1">
+                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">95</h3>
+                                    <span className="text-lg font-bold text-slate-400">+</span>
+                                </div>
+                                <p className="text-slate-500 text-xs md:text-sm font-medium max-w-[160px] leading-snug">
+                                    Global team operating with transparency.
+                                </p>
+                            </div>
+                        </motion.div>
+
+                        <div className="hidden md:block h-16 w-px bg-slate-100 self-center"></div>
+
+                        {/* Impact */}
+                        <motion.div variants={fadeInUp} className="flex-1 group">
+                            <div className="space-y-1">
+                                <p className="text-purple-600 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80">
+                                    Impact
+                                </p>
+                                <div className="flex items-baseline gap-1">
+                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">$10M</h3>
+                                </div>
+                                <p className="text-slate-500 text-xs md:text-sm font-medium max-w-[160px] leading-snug">
+                                    Profit shared directly with our employees.
+                                </p>
+                            </div>
+                        </motion.div>
                     </motion.div>
                 </div>
+            </section>
 
-                <Pagination
-                    currentPage={1}
-                    totalPages={52}
-                    onPageChange={(page) => {
-                        if (page === 1) navigate('/blog');
-                        else navigate(`/blog?page=${page}`);
-                    }}
-                />
+            {/* Writing Section*/}
+            <section className="pt-8 md:pt-12 pb-16 md:pb-24 px-4 lg:pl-24 xl:pl-32 lg:pr-24 xl:pr-32 bg-white overflow-hidden">
+                <div className="max-w-screen-2xl mx-auto">
+
+                    {/* Header Section */}
+                    <div className="flex flex-col mb-10 md:mb-16 space-y-4">
+                        <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">
+                            Latest <span className="text-blue-500">Writing</span>
+                        </h2>
+                        <div className="h-1 w-20 bg-blue-600 rounded-full"></div>
+                    </div>
+
+                    {/* Modern Asymmetric Grid */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            className="lg:col-span-7 group cursor-pointer"
+                        >
+                            <div className="relative aspect-[16/10] rounded-3xl overflow-hidden bg-slate-100 mb-6">
+                                <img
+                                    src={blogVideo}
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                                <div className="absolute top-6 left-6">
+                                    <span className="bg-black text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
+                                        Featured
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="space-y-4">
+                                <div className="flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-widest">
+                                    <span>Ep. {posts[0].episode}</span>
+                                    <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                    <span className="text-slate-400">{posts[0].date}</span>
+                                </div>
+                                <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 group-hover:text-gray-900 transition-colors leading-tight">
+                                    {posts[0].title}
+                                </h3>
+                                <p className="text-slate-500 text-lg leading-relaxed max-w-2xl">
+                                    Nathan breaks down the exact flywheels used to scale Kit to a $45M powerhouse while maintaining 100% ownership.
+                                </p>
+                            </div>
+                        </motion.div>
+
+                        {/* RIGHT: Stacked Secondary Posts (Takes 5/12 columns) */}
+                        <div className="lg:col-span-5 flex flex-col gap-8">
+                            {posts.slice(1, 4).map((post) => (
+                                <motion.div
+                                    key={post.id}
+                                    initial={{ opacity: 0, x: 20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    className="group flex gap-6 items-center p-4 rounded-3xl hover:bg-slate-50 transition-colors cursor-pointer"
+                                >
+                                    <div className="w-32 h-32 flex-shrink-0 rounded-2xl overflow-hidden bg-slate-200">
+                                        <img src={blogVideo} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                            {post.date}
+                                        </p>
+                                        <h4 className="text-lg font-bold text-slate-900 group-hover:text-gray-900 transition-colors leading-snug">
+                                            {post.title}
+                                        </h4>
+                                        <div className="flex items-center gap-2 text-blue-600 font-bold text-xs">
+                                            Read More <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+
+                            <motion.div
+                                whileHover={{ y: -5 }}
+                                className="bg-blue-600 rounded-3xl p-8 text-white relative overflow-hidden"
+                            >
+                                <div className="relative z-10">
+                                    <h4 className="text-xl font-bold mb-2">Want the highlights?</h4>
+                                    <p className="text-blue-100 text-sm mb-6">Join 50,000+ creators getting weekly strategy deep dives.</p>
+                                    <button className="w-full bg-white text-blue-600 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors">
+                                        Join the Newsletter
+                                    </button>
+                                </div>
+                                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-500 rounded-full opacity-50 shadow-inner"></div>
+                            </motion.div>
+                        </div>
+
+                    </div>
+
+                    {/* Footer Link / Pagination */}
+                    <div className="mt-8 md:mt-12 border-t border-slate-100 pt-8">
+                        <Pagination
+                            currentPage={1}
+                            totalPages={52}
+                            onPageChange={(page) => {
+                                if (page === 1) navigate('/blog');
+                                else navigate(`/blog?page=${page}`);
+                            }}
+                        />
+                    </div>
+                </div>
             </section>
         </div>
     );

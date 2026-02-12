@@ -97,7 +97,7 @@ export default function BlogPage() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="flex flex-col items-center gap-4 mb-20 text-center"
             >
-                <h1 className="text-5xl font-bold tracking-tighter sm:text-6xl text-black uppercase">
+                <h1 className="text-6xl font-black text-slate-900 tracking-tighter sm:text-6xl text-black uppercase">
                     Blog
                 </h1>
                 <p className="text-lg text-gray-400 max-w-xl font-medium tracking-tight">
@@ -108,7 +108,7 @@ export default function BlogPage() {
             <div className="max-w-5xl mx-auto min-h-[600px]">
                 <motion.div
                     layout
-                    className="grid gap-x-10 gap-y-16 sm:grid-cols-2"
+                    className="grid gap-x-4 gap-y-10 sm:gap-x-10 sm:gap-y-16 grid-cols-2"
                 >
                     <AnimatePresence mode="popLayout">
                         {currentPosts.map((post, index) => (
@@ -137,33 +137,34 @@ export default function BlogPage() {
                                         transition={{ duration: 0.6, ease: "circOut" }}
                                         src={post.thumbnail}
                                         alt={post.title}
-                                        className="w-full h-full object-cove transition-all duration-700"
+                                        className="w-full h-full object-cover transition-all duration-700"
                                     />
-                                    <div className="absolute bottom-4 left-4">
-                                        <span className="bg-black text-white px-3 py-1 text-[10px] font-bold tracking-[0.2em]">
+                                    <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4">
+                                        <span className="bg-black text-white px-2 py-0.5 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] font-bold tracking-[0.2em]">
                                             EP {post.episode}
                                         </span>
                                     </div>
                                 </a>
 
-                                <div className="mt-8 space-y-3">
-                                    <div className="text-[11px] font-bold text-gray-400 tracking-[0.2em] uppercase">
+                                <div className="mt-4 sm:mt-8 space-y-2 sm:space-y-3">
+                                    <div className="text-[9px] sm:text-[11px] font-bold text-gray-400 tracking-[0.2em] uppercase">
                                         {post.date}
                                     </div>
 
                                     {/* WRAPPER LINK FOR TITLE */}
                                     <a href={post.link} target="_blank" rel="noopener noreferrer">
-                                        <h3 className="text-2xl font-bold text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300 cursor-pointer">
+                                        {/* Adjusted font size for mobile: text-lg vs text-2xl */}
+                                        <h3 className="text-sm sm:text-2xl font-bold text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300 cursor-pointer line-clamp-2">
                                             {post.title}
                                         </h3>
                                     </a>
 
-                                    <div className="relative pt-2 w-fit">
+                                    <div className="relative pt-1 sm:pt-2 w-fit">
                                         <a
                                             href={post.link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-[13px] font-bold uppercase tracking-widest text-black cursor-pointer"
+                                            className="text-[10px] sm:text-[13px] font-bold uppercase tracking-widest text-black cursor-pointer"
                                         >
                                             Read Article
                                         </a>

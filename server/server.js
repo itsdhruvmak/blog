@@ -47,10 +47,8 @@ app.get("/", (req, res) => {
 app.use("/api/items", itemRouter)
 app.use("/api/auth", authRouter)
 
-// Connect to database
 connectDB()
 
-// For local development
 if (process.env.NODE_ENV !== 'production') {
     const PORT = process.env.PORT || 8080
     app.listen(PORT, () => {
@@ -58,7 +56,6 @@ if (process.env.NODE_ENV !== 'production') {
     })
 }
 
-// Global error handler
 app.use((err, req, res, next) => {
     console.error("Global Error Handler:", err);
     res.status(500).json({
@@ -68,5 +65,4 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Export for Vercel serverless
 export default app

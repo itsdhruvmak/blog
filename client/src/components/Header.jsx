@@ -24,19 +24,20 @@ export default function Header() {
 
                 <div className="flex items-center gap-12">
                     <Link to="/" className="flex items-center space-x-2 shrink-0">
-                        <span className="text-xl font-black tracking-tighter uppercase">
-                            NATHAN BARRY
+                        <span className="text-xl font-black tracking-tighter uppercase text-slate-900">
+                            Hitesh Lakhani
                         </span>
                     </Link>
 
-                    <nav className="hidden md:flex items-center space-x-8 text-[12px] font-bold uppercase tracking-[0.2em]">
+                    {/* DESKTOP NAV: Hidden on Mobile & Tablet (lg:flex) */}
+                    <nav className="hidden lg:flex items-center space-x-8 text-[12px] font-bold uppercase tracking-[0.2em]">
                         {navItems.map((item) => (
                             <Link
                                 key={item.href}
                                 to={item.href}
                                 className={cn(
                                     "relative transition-colors hover:text-black",
-                                    pathname === item.href ? "text-black" : "text-slate-400"
+                                    pathname === item.href ? "text-black" : "text-slate-500"
                                 )}
                             >
                                 {item.name}
@@ -51,7 +52,8 @@ export default function Header() {
                     </nav>
                 </div>
 
-                <div className="hidden md:flex items-center gap-6 text-slate-400">
+                {/* DESKTOP EXTRAS: Hidden on Mobile & Tablet (lg:flex) */}
+                <div className="hidden lg:flex items-center gap-6 text-slate-400">
                     <div className="flex items-center gap-4 border-r border-slate-200 pr-6">
                         <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
                             <Twitter size={18} />
@@ -84,10 +86,13 @@ export default function Header() {
                     </div>
                 </div>
 
-                {/* Mobile Toggle & Search */}
-                <div className="flex items-center gap-2 md:hidden">
+                {/* MOBILE & TABLET TOGGLE: Visible until Large (lg:hidden) */}
+                <div className="flex items-center gap-2 lg:hidden">
                     <button
-                        onClick={() => setIsSearchOpen(!isSearchOpen)}
+                        onClick={() => {
+                            setIsSearchOpen(!isSearchOpen);
+                            if (isOpen) setIsOpen(false); // Close menu if search opens
+                        }}
                         className="p-2 text-slate-600 hover:text-black transition-colors"
                         aria-label="Search"
                     >
@@ -95,7 +100,10 @@ export default function Header() {
                     </button>
 
                     <button
-                        onClick={() => setIsOpen(!isOpen)}
+                        onClick={() => {
+                            setIsOpen(!isOpen);
+                            if (isSearchOpen) setIsSearchOpen(false); // Close search if menu opens
+                        }}
                         className="p-2 text-slate-600 hover:text-black transition-colors"
                         aria-label="Toggle Menu"
                     >
@@ -104,61 +112,69 @@ export default function Header() {
                 </div>
             </div>
 
+            {/* MOBILE & TABLET SEARCH BAR: Full width dropdown */}
             <AnimatePresence>
                 {isSearchOpen && (
                     <motion.div
                         initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 60, opacity: 1 }}
+                        animate={{ height: 70, opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="md:hidden border-t border-slate-100 bg-white px-4 flex items-center"
+                        className="lg:hidden border-t border-slate-100 bg-white px-6 flex items-center overflow-hidden"
                     >
-                        <div className="relative w-full flex items-center">
-                            <Search size={16} className="absolute left-3 text-slate-400" />
+                        <div className="relative w-full flex items-center max-w-3xl mx-auto">
+                            <Search size={18} className="absolute left-4 text-slate-400" />
                             <input
                                 type="text"
                                 placeholder="Search articles..."
                                 autoFocus
-                                className="w-full bg-slate-50 py-2 pl-10 pr-4 rounded-full text-sm outline-none focus:ring-1 focus:ring-black"
+                                className="w-full bg-slate-100 py-3 pl-12 pr-4 rounded-xl text-sm outline-none focus:ring-2 focus:ring-slate-200 transition-all"
                             />
                             <button
                                 onClick={() => setIsSearchOpen(false)}
-                                className="ml-2 text-xs font-bold uppercase tracking-wider"
+                                className="ml-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-black"
                             >
-                                Cancel
+                                Close
                             </button>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
-            {/* Mobile Menu */}
+
+            {/* MOBILE & TABLET MENU: Overlapping dropdown */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="md:hidden bg-white border-b border-slate-100 px-6 py-8"
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="absolute top-full left-0 w-full lg:hidden bg-white border-b border-slate-100 px-8 py-10 shadow-2xl z-50 overflow-hidden"
                     >
-                        <nav className="flex flex-col space-y-6">
-                            {navItems.map((item) => (
-                                <Link
+                        <nav className="flex flex-col space-y-8">
+                            {navItems.map((item, index) => (
+                                <motion.div
                                     key={item.href}
-                                    to={item.href}
-                                    onClick={() => setIsOpen(false)}
-                                    className={cn(
-                                        "text-2xl font-bold tracking-tighter uppercase",
-                                        pathname === item.href ? "text-black" : "text-slate-300"
-                                    )}
+                                    initial={{ x: -20, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ delay: index * 0.05 }}
                                 >
-                                    {item.name}
-                                </Link>
+                                    <Link
+                                        to={item.href}
+                                        onClick={() => setIsOpen(false)}
+                                        className={cn(
+                                            "text-3xl font-black tracking-tighter uppercase transition-colors",
+                                            pathname === item.href ? "text-black" : "text-slate-200 hover:text-slate-400"
+                                        )}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                </motion.div>
                             ))}
                         </nav>
 
-                        <div className="flex gap-6 mt-12 pt-8 border-t border-slate-100 text-slate-400">
-                            <Twitter size={20} />
-                            <Youtube size={20} />
-                            <Search size={20} />
+                        <div className="flex gap-8 mt-12 pt-8 border-t border-slate-100 text-slate-400">
+                            <a href="#" className="hover:text-black transition-colors"><Twitter size={24} /></a>
+                            <a href="#" className="hover:text-black transition-colors"><Youtube size={24} /></a>
                         </div>
                     </motion.div>
                 )}
