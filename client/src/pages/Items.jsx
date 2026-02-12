@@ -5,25 +5,28 @@ import appDesign from "../assets/appDesign.png";
 import commit from "../assets/commitApp.png";
 import psImg from "../assets/psImg.png";
 import { ArrowRight, Loader2 } from "lucide-react";
+import poetryBookImg from "../assets/robin.jpg";
+import essaySeriesImg from "../assets/discover.jpg";
+import memoirImg from "../assets/monk.jpg";
 
 const expiredItems = [
     {
         id: 1,
-        title: "The App Design Handbook",
-        description: "The complete guide to building full-stack applications with Next.js.",
-        image: appDesign
+        title: "Kalam Aur Kaagaz",
+        description: "My debut collection of Hindi poetry exploring the nostalgia of small-town India and the passage of time.",
+        image: poetryBookImg
     },
     {
         id: 2,
-        title: "Photoshop for Web Design",
-        description: "A comprehensive toolkit for digital creators to scale their business.",
-        image: commit
+        title: "Naya Daur",
+        description: "A series of investigative essays on how the digital revolution changed the social fabric of rural India.",
+        image: essaySeriesImg
     },
     {
         id: 3,
-        title: "Commit App",
-        description: "Learn how to build scalable and consistent design systems.",
-        image: psImg
+        title: "Shabdon Ka Safar",
+        description: "A limited-edition memoir chronicling my early years as a struggling writer in a rapidly changing Mumbai.",
+        image: memoirImg
     }
 ];
 
@@ -85,7 +88,7 @@ export default function Items() {
     return (
         <div className="container py-12 md:py-24 mx-auto px-4 lg:px-24 xl:px-32">
 
-            {/* --- ACTIVE PRODUCTS SECTION --- */}
+            {/* --- ACTIVE LITERARY WORKS SECTION --- */}
             <motion.div
                 variants={fadeInUp}
                 initial="hidden"
@@ -93,10 +96,13 @@ export default function Items() {
                 className="flex flex-col items-center text-center gap-4 mb-10 md:mb-16 mx-auto"
             >
                 <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter uppercase">
-                    My Current Books & Products
+                    Published Works & Projects
                 </h1>
                 <p className="text-lg md:text-xl text-slate-500 max-w-3xl leading-relaxed mx-auto">
-                    Over the years I’ve self-published three books, two courses, and a few apps and software products. While Kit is my main focus, books like Authority have served as a roadmap for an entire generation of creators.
+                    Throughout my career, I’ve authored eight volumes exploring the intersection of
+                    modern technology and Indian heritage. From my debut novel to deep-dives
+                    into creator economics, my writing serves as a bridge for those navigating
+                    the vibrant, evolving landscape of the subcontinent.
                 </p>
             </motion.div>
 
@@ -153,11 +159,14 @@ export default function Items() {
             <hr className="my-12 md:my-16 border-slate-100" />
 
             <div className="flex flex-col items-start gap-4 mb-8 md:mb-12">
-                <h2 className="text-3xl font-black tracking-tighter uppercase md:text-5xl">
-                    Retired products
+                <h2 className="text-3xl font-black tracking-tighter uppercase md:text-5xl text-slate-900">
+                    The Literary Archive
                 </h2>
-                <p className="text-base md:text-lg text-slate-500 max-w-3xl">
-                    A few of the products I’ve built over the years are out of date or no longer available. I decided to leave them up for reference.
+                <p className="text-base md:text-lg text-slate-500 max-w-3xl leading-relaxed">
+                    Every writer has a path littered with early drafts and out-of-print editions.
+                    These are the columns, early anthologies, and experimental essays that
+                    defined my voice before I found my current stride. I keep them here as a
+                    testament to the process.
                 </p>
             </div>
 

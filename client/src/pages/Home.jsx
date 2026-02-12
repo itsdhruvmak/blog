@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import userImage from "../assets/userImage.png"
 import blogVideo from "../assets/blogVideo.jpg"
+import lothal from "../assets/lothal.png"
+import literature from "../assets/literaturre.jpg"
+
 
 // Animation Variants
 const fadeInUp = {
@@ -34,10 +37,38 @@ const PRODUCTS = [
 ];
 
 const posts = [
-    { id: 1, title: "How I Actually Grew To 1M+ Subscribers On YouTube (Noah Kagan)", episode: "114", date: "February 5, 2026", thumbnail: appDesign, link: "#" },
-    { id: 2, title: "How To Partner With Anyone In 2026 (Proven Framework)", episode: "113", date: "January 29, 2026", thumbnail: appDesign, link: "#" },
-    { id: 3, title: "The Future of Design Systems with Vercel's VP of Design", episode: "112", date: "January 22, 2026", thumbnail: appDesign, link: "#" },
-    { id: 4, title: "Building a SaaS from Scratch: 0 to $10k MRR", episode: "111", date: "January 15, 2026", thumbnail: appDesign, link: "#" }
+    {
+        id: 1,
+        title: "The Architecture of Silence: Lessons from Ancient Stepwells",
+        episode: "Essay 114",
+        date: "February 5, 2026",
+        thumbnail: lothal,
+        link: "#"
+    },
+    {
+        id: 2,
+        title: "Why Indian Regional Literature is the Next Global Frontier",
+        episode: "Essay 113",
+        date: "January 29, 2026",
+        thumbnail: literature,
+        link: "#"
+    },
+    {
+        id: 3,
+        title: "Crafting Characters: How Mumbai’s Local Trains Shape My Prose",
+        episode: "Essay 112",
+        date: "January 22, 2026",
+        thumbnail: lothal,
+        link: "#"
+    },
+    {
+        id: 4,
+        title: "The Writer’s Routine: Balancing Heritage and the Digital Age",
+        episode: "Essay 111",
+        date: "January 15, 2026",
+        thumbnail: literature,
+        link: "#"
+    }
 ];
 
 export default function Home() {
@@ -64,16 +95,16 @@ export default function Home() {
                         <div className="lg:col-span-7 text-left space-y-8">
                             <motion.div variants={fadeInUp} className="space-y-4">
                                 <span className="inline-block py-1 px-3 rounded-full bg-black/5 text-sm font-semibold tracking-wide uppercase">
-                                    Founder of Kit
+                                    Indian Writer
                                 </span>
                                 <h1 className="text-5xl lg:text-8xl font-black leading-[1.1] tracking-tight text-slate-900">
-                                    Design. Build. <br />
+                                    Observe. Write. <br />
                                     <span className="bg-gradient-to-r from-blue-500 to-indigo-500 bg-clip-text text-transparent">
                                         Repeat.
                                     </span>
                                 </h1>
                                 <p className="text-lg md:text-xl text-slate-600 max-w-xl leading-relaxed">
-                                    I’m Hitesh Lakhani—a creator, author, and designer. I like to build audiences and companies.Right now 110% of my time is focused on building Kit: the operating system for creators who mean business.
+                                    I’m Hitesh Lakhani—a writer, observer, and storyteller. I spend my days exploring the quiet intersections of urban life and human emotion through prose. When I’m not lost in a manuscript, I’m likely wandering the streets of Mumbai, searching for the stories that usually go untold.
                                 </p>
                             </motion.div>
 
@@ -122,7 +153,7 @@ export default function Home() {
                                     className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-slate-100 hidden md:block"
                                 >
                                     <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Recent Book</p>
-                                    <p className="text-lg font-extrabold text-slate-900">The I Am A Creator</p>
+                                    <p className="text-lg font-extrabold text-slate-900">The I Am A Writer</p>
                                 </motion.div>
                             </div>
                         </motion.div>
@@ -139,31 +170,36 @@ export default function Home() {
                 className="mt-12 mb-8 md:mb-12 max-w-screen-2xl mx-auto px-4 lg:pl-24 xl:pl-32 text-left"
             >
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                    {/* Heading Section */}
                     <motion.div variants={fadeInUp} className="md:col-span-5">
                         <h2 className="text-6xl md:text-8xl font-serif font-bold tracking-tight leading-none text-slate-900">
-                            I design <br />
-                            <span className="underline decoration-1 underline-offset-8">products.</span>
+                            I craft <br />
+                            <span className="underline decoration-1 underline-offset-8">stories.</span>
                         </h2>
                     </motion.div>
 
+                    {/* Middle Description */}
                     <motion.div variants={fadeInUp} className="md:col-span-3">
                         <p className="text-lg text-slate-600 font-serif leading-relaxed">
-                            I’ve always cared about great visual design, but a few years ago I learned
-                            that I loved to teach as well. That led to starting this blog, building iPhone
-                            apps, and writing several books.
+                            I’ve always been fascinated by the weight of words. What started as
+                            a personal journal evolved into a deep passion for storytelling,
+                            leading me to publish several books and reach readers across the
+                            globe through my weekly essays.
                         </p>
                     </motion.div>
 
+                    {/* Right Description & Link */}
                     <motion.div variants={fadeInUp} className="md:col-span-4 space-y-6">
                         <p className="text-lg text-slate-600 font-serif leading-relaxed">
-                            This site chronicles my journey learning to create the best products
-                            possible. All while teaching others to do the same.
+                            This site serves as a digital library for my thoughts—spanning fiction,
+                            cultural commentary, and the craft of writing itself. I’m here to
+                            share what I learn about the power of a well-told story.
                         </p>
                         <Link
                             to="/about"
                             className="inline-flex items-center group text-teal-800 font-serif italic font-bold border-b border-teal-100 hover:border-teal-800 transition-colors"
                         >
-                            A little more about me
+                            Explore my bibliography
                             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Link>
                     </motion.div>
@@ -180,12 +216,15 @@ export default function Home() {
             >
                 <div className="max-w-screen-2xl mx-auto lg:pl-24 xl:pl-32 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
                     <motion.div variants={fadeInUp} className="md:col-span-8 space-y-6">
-                        <h4 className="text-[11px] font-bold tracking-[0.3em] text-blue-600 uppercase">I'M THE FOUNDER OF KIT.</h4>
+                        <h4 className="text-[11px] font-bold tracking-[0.3em] text-blue-600 uppercase">
+                            Author & Cultural Chronicler
+                        </h4>
                         <p className="text-2xl md:text-4xl text-slate-900 font-serif leading-tight">
-                            As a creator I realized the tools for building an audience just didn't cut it. So I started Kit: the operating system for creators.
+                            I believe that stories are the only things that survive us. I write to capture the
+                            rhythm of modern India—bridging the gap between heritage and our digital future.
                         </p>
-                        <Link to="/about" className="inline-flex items-center gap-2 text-slate-900 font-serif italic font-bold border-b border-slate-200 pb-1 hover:border-slate-900 transition-all group">
-                            Learn more about the SaaS journey
+                        <Link to="/books" className="inline-flex items-center gap-2 text-slate-900 font-serif italic font-bold border-b border-slate-200 pb-1 hover:border-slate-900 transition-all group">
+                            Explore my latest publications
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Link>
                     </motion.div>
@@ -204,70 +243,71 @@ export default function Home() {
                         variants={staggerContainer}
                         className="grid grid-cols-2 md:flex md:flex-row justify-between items-start gap-y-8 md:gap-y-12 gap-x-6 md:gap-4"
                     >
-                        {/* Founded */}
+                        {/* Experience */}
                         <motion.div variants={fadeInUp} className="flex-1 group">
                             <div className="space-y-1">
                                 <p className="text-blue-600 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80">
-                                    Founded
+                                    Legacy
                                 </p>
                                 <div className="flex items-baseline gap-1">
-                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">2013</h3>
+                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">12</h3>
+                                    <span className="text-lg font-bold text-slate-400">+</span>
                                 </div>
                                 <p className="text-slate-500 text-xs md:text-sm font-medium max-w-[160px] leading-snug">
-                                    From side project to creator powerhouse.
+                                    Years of documenting stories across India.
                                 </p>
                             </div>
                         </motion.div>
 
                         <div className="hidden md:block h-16 w-px bg-slate-100 self-center"></div>
 
-                        {/* Revenue */}
+                        {/* Readership */}
                         <motion.div variants={fadeInUp} className="flex-1 group">
                             <div className="space-y-1">
                                 <p className="text-emerald-600 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80">
-                                    Revenue
+                                    Readership
                                 </p>
                                 <div className="flex items-baseline gap-1">
-                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">$45M</h3>
+                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">500K</h3>
                                     <span className="text-lg font-bold text-slate-400">+</span>
                                 </div>
                                 <p className="text-slate-500 text-xs md:text-sm font-medium max-w-[160px] leading-snug">
-                                    Annual revenue with zero outside funding.
+                                    Global readers reached through books and essays.
                                 </p>
                             </div>
                         </motion.div>
 
                         <div className="hidden md:block h-16 w-px bg-slate-100 self-center"></div>
 
-                        {/* The Team */}
+                        {/* Publications */}
                         <motion.div variants={fadeInUp} className="flex-1 group">
                             <div className="space-y-1">
                                 <p className="text-orange-600 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80">
-                                    The Team
+                                    Volumes
                                 </p>
                                 <div className="flex items-baseline gap-1">
-                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">95</h3>
-                                    <span className="text-lg font-bold text-slate-400">+</span>
+                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">08</h3>
                                 </div>
                                 <p className="text-slate-500 text-xs md:text-sm font-medium max-w-[160px] leading-snug">
-                                    Global team operating with transparency.
+                                    Published works ranging from fiction to design.
                                 </p>
                             </div>
                         </motion.div>
 
                         <div className="hidden md:block h-16 w-px bg-slate-100 self-center"></div>
 
-                        {/* Impact */}
+                        {/* Speaking/Impact */}
                         <motion.div variants={fadeInUp} className="flex-1 group">
                             <div className="space-y-1">
                                 <p className="text-purple-600 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80">
-                                    Impact
+                                    Community
                                 </p>
                                 <div className="flex items-baseline gap-1">
-                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">$10M</h3>
+                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tighter">40</h3>
+                                    <span className="text-lg font-bold text-slate-400">+</span>
                                 </div>
                                 <p className="text-slate-500 text-xs md:text-sm font-medium max-w-[160px] leading-snug">
-                                    Profit shared directly with our employees.
+                                    Workshops and talks hosted for aspiring writers.
                                 </p>
                             </div>
                         </motion.div>
@@ -296,7 +336,7 @@ export default function Home() {
                         >
                             <div className="relative aspect-[16/10] rounded-3xl overflow-hidden bg-slate-100 mb-6">
                                 <img
-                                    src={blogVideo}
+                                    src={lothal}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
                                 <div className="absolute top-6 left-6">
@@ -330,7 +370,7 @@ export default function Home() {
                                     className="group flex gap-6 items-center p-4 rounded-3xl hover:bg-slate-50 transition-colors cursor-pointer"
                                 >
                                     <div className="w-32 h-32 flex-shrink-0 rounded-2xl overflow-hidden bg-slate-200">
-                                        <img src={blogVideo} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                        <img src={lothal} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                     </div>
                                     <div className="space-y-2">
                                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
