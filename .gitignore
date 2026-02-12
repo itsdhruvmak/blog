@@ -36,7 +36,6 @@ ENV/
 .venv/
 .pytest_cache/
 .coverage
-htmlcov/
 .tox/
 *.db
 *.sqlite3
