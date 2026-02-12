@@ -6,13 +6,11 @@ export default function Footer() {
     return (
         <footer className="bg-[#111111] text-white py-12 md:py-24 px-4 lg:pl-24 xl:pl-32 lg:pr-24 xl:pr-32">
             <div className="container mx-auto max-w-screen-2xl">
-                {/* Reduced gap from 12 to 8 for mobile, restored for desktop */}
                 <div className="grid gap-8 md:gap-12 lg:grid-cols-12">
 
                     {/* Newsletter Section */}
                     <div className="lg:col-span-4 space-y-6 md:space-y-8">
                         <div className="space-y-3">
-                            {/* Adjusted text size for mobile (2xl) vs desktop (3xl) */}
                             <h3 className="text-2xl md:text-3xl font-bold text-white uppercase leading-tight">
                                 Subscribe to the <br className="hidden sm:block" /> weekly newsletter.
                             </h3>

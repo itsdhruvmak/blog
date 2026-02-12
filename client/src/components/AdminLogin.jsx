@@ -13,7 +13,7 @@ const AdminLogin = () => {
         e.preventDefault();
         try {
             const response = await api.post('/api/auth/login', { password });
-            localStorage.setItem('adminToken', response.data.token);
+            // localStorage.setItem('adminToken', response.data.token);
             navigate('/admin/dashboard');
         } catch (err) {
             setError(err.response?.data?.message || "Access denied. Please check your credentials.");
@@ -22,7 +22,6 @@ const AdminLogin = () => {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-[#F8FAFC] text-slate-900 px-4">
-            {/* Soft Ambient Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-blue-50/50 to-transparent"></div>
             </div>

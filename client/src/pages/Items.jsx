@@ -150,7 +150,6 @@ export default function Items() {
             </motion.div>
 
             {/* --- RETIRED PRODUCTS SECTION --- */}
-            {/* Reduced margin significantly: from my-24 to my-12 md:my-16 */}
             <hr className="my-12 md:my-16 border-slate-100" />
 
             <div className="flex flex-col items-start gap-4 mb-8 md:mb-12">
@@ -167,7 +166,6 @@ export default function Items() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                /* Tightened vertical gap from gap-y-12 to gap-y-8 */
                 className="grid gap-x-8 gap-y-8 md:gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
             >
                 {expiredItems.map((item) => (
