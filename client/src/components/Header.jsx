@@ -85,7 +85,7 @@ export default function Header() {
                             <div className="flex items-center gap-3">
                                 <Link
                                     to="/admin/login"
-                                    className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors"
+                                    className="px-4 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 transition-all active:scale-95"
                                 >
                                     Admin
                                 </Link>

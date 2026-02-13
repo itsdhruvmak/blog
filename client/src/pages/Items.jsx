@@ -104,162 +104,180 @@ export default function Items() {
     }
 
     return (
-        <div className="container py-12 md:py-24 mx-auto px-4 lg:px-24 xl:px-32">
+        <div className="bg-white min-h-screen selection:bg-slate-900 selection:text-white py-6 md:py-10">
 
-            {/* --- ACTIVE LITERARY WORKS SECTION --- */}
-            <motion.div
-                variants={fadeInUp}
-                initial="hidden"
-                animate="visible"
-                className="flex flex-col items-center text-center gap-4 mb-10 md:mb-16 mx-auto"
-            >
-                <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter uppercase">
-                    Published Works & Projects
-                </h1>
-                <p className="text-lg md:text-xl text-slate-500 max-w-3xl leading-relaxed mx-auto">
-                    Throughout my career, I’ve authored eight volumes exploring the intersection of
-                    modern technology and Indian heritage. From my debut novel to deep-dives
-                    into creator economics, my writing serves as a bridge for those navigating
-                    the vibrant, evolving landscape of the subcontinent.
-                </p>
-            </motion.div>
-
-            <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="grid gap-6 md:gap-10 sm:grid-cols-2 lg:grid-cols-3"
-            >
-                {items.map((item) => (
+            {/* Studio Masthead */}
+            <header className="pt-8 pb-20 px-4 lg:px-24 xl:px-32">
+                <div className="max-w-screen-2xl mx-auto">
                     <motion.div
-                        key={item._id}
-                        variants={itemVariants}
-                        className="group relative flex flex-col bg-white rounded-[2rem] p-4 border border-slate-100 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.08)] hover:border-blue-100"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: "circOut" }}
+                        className="space-y-4"
                     >
-                        {/* Image Container with Floating Badge */}
-                        <div className="relative aspect-[16/11] overflow-hidden rounded-[1.5rem] bg-slate-50">
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                            />
-                            <div className="absolute top-4 left-4 flex flex-col gap-2">
-                                <span className="backdrop-blur-md bg-white/70 border border-white/40 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.15em] text-slate-800">
-                                    {item.subCategory}
-                                </span>
-                                {item.price && (
-                                    <span className="backdrop-blur-md bg-blue-600/90 border border-blue-400 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.15em] text-white">
-                                        ₹{item.price}
-                                    </span>
-                                )}
-                            </div>
+                        <div className="flex items-center gap-3">
+                            <span className="h-1.5 w-1.5 rounded-full bg-slate-900" />
+                            <span className="text-[10px] font-bold tracking-[0.4em] text-slate-400 uppercase">Product Index</span>
                         </div>
+                        <h1 className="text-5xl md:text-7xl font-black text-slate-950 tracking-tighter uppercase leading-none font-sans">
+                            PUBLISHED <span className="text-slate-300">WORKS</span> & PROJECTS
+                        </h1>
+                        <p className="text-slate-400 text-sm max-w-md font-medium leading-relaxed tracking-tight">
+                            A curated selection of books, investigative essays, and digital projects exploring Indian heritage and modern tech.
+                        </p>
+                    </motion.div>
+                </div>
+            </header>
 
-                        {/* Content Area */}
-                        <div className="px-2 md:px-4 pt-6 md:pt-8 pb-4 flex flex-col flex-1">
-                            <h3 className="text-2xl font-black mb-3 tracking-tighter text-slate-900 group-hover:text-blue-600 transition-colors">
-                                {item.name}
-                            </h3>
-                            <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-3">
-                                {item.description}
-                            </p>
+            <main className="px-4 lg:px-24 xl:px-32">
+                <div className="max-w-screen-2xl mx-auto">
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
+                    >
+                        {items.map((item, index) => (
+                            <motion.div
+                                key={item._id}
+                                variants={itemVariants}
+                                className="group flex flex-col cursor-pointer"
+                            >
+                                {/* Image Container with Embedded Meta */}
+                                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-50 transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+                                    <img
+                                        src={item.image}
+                                        alt={item.name}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
 
-                            <div className="mt-auto flex flex-col gap-4">
-                                <div className="flex items-center justify-between gap-4">
-                                    <button
-                                        onClick={() => handleBuyNow(item)}
-                                        className={`flex-1 flex items-center justify-center gap-2 cursor-pointer py-3 px-4 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-widest transition-all duration-300 active:scale-95 ${purchaseSuccess === item._id
-                                            ? "bg-green-500 text-white"
-                                            : "bg-slate-900 text-white hover:bg-blue-600"
-                                            }`}
-                                    >
-                                        {purchaseSuccess === item._id ? (
-                                            <>
-                                                <CheckCircle2 size={16} />
-                                                Success
-                                            </>
-                                        ) : (
-                                            <>
-                                                <ShoppingCart size={16} />
-                                                {item.category === "book" ? "Buy Now" : "Pre-order"}
-                                            </>
-                                        )}
-                                    </button>
-                                    <button className="group/link flex items-center cursor-pointer gap-2 text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors">
-                                        Details
-                                        <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" />
-                                    </button>
+                                    {/* Top-Right Price Tag */}
+                                    {item.price && (
+                                        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <div className="bg-white/90 backdrop-blur text-[9px] font-black text-slate-950 px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
+                                                ₹{item.price}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Bottom-Left Embedded Badge */}
+                                    <div className="absolute bottom-4 left-4">
+                                        <div className="bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-xl flex items-center gap-2 border border-white/10">
+                                            <span className="text-[9px] font-black text-white uppercase tracking-widest">{item.subCategory}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
+
+                                {/* Content Below */}
+                                <div className="pt-8 space-y-4 flex flex-col flex-1">
+                                    <div className="space-y-2">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-900">{item.category}</span>
+                                            {index === 0 && (
+                                                <div className="flex items-center gap-1.5">
+                                                    <div className="h-1 w-1 rounded-full bg-blue-600 animate-pulse" />
+                                                    <span className="text-[9px] font-bold text-blue-600 uppercase tracking-widest">Featured</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <h3 className="text-xl md:text-2xl font-black text-slate-950 tracking-tight leading-tight uppercase group-hover:text-blue-600 transition-colors duration-300">
+                                            {item.name}
+                                        </h3>
+                                        <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 font-medium">
+                                            {item.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="mt-auto pt-4 flex items-center justify-between gap-4">
+                                        <button
+                                            onClick={() => handleBuyNow(item)}
+                                            className={`flex-1 py-3 px-6 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${purchaseSuccess === item._id
+                                                ? "bg-green-500 text-white"
+                                                : "bg-slate-900 text-white hover:bg-blue-600"
+                                                }`}
+                                        >
+                                            {purchaseSuccess === item._id ? "Added to Cart" : (item.category === "book" ? "Buy Now" : "Pre-order")}
+                                        </button>
+                                        <button className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors py-2">
+                                            Details
+                                        </button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
                     </motion.div>
-                ))}
-            </motion.div>
+                </div>
+            </main>
 
 
-            {/* --- RETIRED PRODUCTS SECTION --- */}
-            <hr className="my-12 md:my-16 border-slate-100" />
+            {/* --- THE LITERARY ARCHIVE --- */}
+            <div className="px-4 lg:px-24 xl:px-32 pb-32">
+                <div className="max-w-screen-2xl mx-auto">
+                    <hr className="my-16 md:my-20 border-slate-100" />
 
-            <div className="flex flex-col items-start gap-4 mb-8 md:mb-12">
-                <h2 className="text-3xl font-black tracking-tighter uppercase md:text-5xl text-slate-900">
-                    The Literary Archive
-                </h2>
-                <p className="text-base md:text-lg text-slate-500 max-w-3xl leading-relaxed">
-                    Every writer has a path littered with early drafts and out-of-print editions.
-                    These are the columns, early anthologies, and experimental essays that
-                    defined my voice before I found my current stride. I keep them here as a
-                    testament to the process.
-                </p>
-            </div>
+                    <div className="flex flex-col items-start gap-4 mb-10">
+                        <div className="flex items-center gap-3">
+                            <span className="h-1.5 w-1.5 rounded-full bg-slate-300" />
+                            <span className="text-[10px] font-bold tracking-[0.4em] text-slate-300 uppercase">Vault Index</span>
+                        </div>
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-950 tracking-tighter uppercase leading-none font-sans">
+                            THE <span className="text-slate-300">LITERARY</span> ARCHIVE
+                        </h2>
+                        <p className="text-slate-400 text-sm max-w-md font-medium leading-relaxed tracking-tight">
+                            An architectural collection of early drafts, out-of-print editions, and experimental essays that defined my voice.
+                        </p>
+                    </div>
 
-            <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="grid gap-x-8 gap-y-8 md:gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
-            >
-                {expiredItems.map((item) => (
                     <motion.div
-                        key={item.id}
-                        variants={itemVariants}
-                        className="group relative flex flex-col cursor-pointer border-t border-slate-100 pt-6 md:pt-8"
+                        variants={containerVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
                     >
-                        <div className="relative aspect-video w-full overflow-hidden rounded-2xl mb-4 md:mb-6">
-                            <img
-                                src={item.image}
-                                alt={item.title}
-                                className="h-full w-full object-cover md:grayscale md:opacity-60 scale-100 md:group-hover:grayscale-0 md:group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                            />
-                            <div className="absolute bottom-4 left-4 md:opacity-0 md:translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                                <span className="bg-slate-900/90 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter text-white">
-                                    Archive Vol. 01
-                                </span>
-                            </div>
-                        </div>
+                        {expiredItems.map((item) => (
+                            <motion.div
+                                key={item.id}
+                                variants={itemVariants}
+                                className="group flex flex-col cursor-pointer"
+                            >
+                                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-50 transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+                                    <img
+                                        src={item.image}
+                                        alt={item.title}
+                                        className="w-full h-full object-cover md:grayscale transition-all duration-1000 group-hover:grayscale-0 group-hover:scale-105"
+                                    />
+                                    <div className="absolute bottom-4 left-4">
+                                        <span className="bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-xl text-[8px] font-black text-white uppercase tracking-widest border border-white/10">
+                                            Archive V.0{item.id}
+                                        </span>
+                                    </div>
+                                </div>
 
-                        <div className="flex flex-col h-[130px] md:h-[140px]">
-                            <div className="flex items-center justify-between mb-2 md:mb-3">
-                                <h3 className="text-lg md:text-xl font-black text-slate-900 tracking-tighter group-hover:text-gray-900 transition-colors">
-                                    {item.title}
-                                </h3>
-                                <span className="text-[10px] font-mono text-slate-400">/0{item.id}</span>
-                            </div>
-                            <p className="text-slate-500 text-xs md:text-sm leading-relaxed line-clamp-2 md:opacity-40 group-hover:opacity-100 transition-opacity duration-300">
-                                {item.description}
-                            </p>
-                            <div className="mt-auto flex items-center gap-2 text-slate-900 font-black text-[10px] uppercase tracking-[0.2em]">
-                                <span className="relative">
-                                    View Case Study
-                                    <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gray-900 group-hover:w-full transition-all duration-300" />
-                                </span>
-                                <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform duration-300" />
-                            </div>
-                        </div>
+                                <div className="pt-8 space-y-4">
+                                    <div className="flex items-center justify-between">
+                                        <h3 className="text-xl md:text-2xl font-black text-slate-950 tracking-tight uppercase group-hover:text-slate-500 transition-colors">
+                                            {item.title}
+                                        </h3>
+                                        <span className="text-[10px] font-bold text-slate-300 uppercase">/0{item.id}</span>
+                                    </div>
+                                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 font-medium">
+                                        {item.description}
+                                    </p>
+                                    <div className="pt-4 flex items-center gap-2 text-slate-950 font-black text-[10px] uppercase tracking-[0.2em] group/btn">
+                                        <span className="relative">
+                                            View Repository
+                                            <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-slate-950 group-hover/btn:w-full transition-all duration-500" />
+                                        </span>
+                                        <ArrowRight size={14} className="group-hover/btn:translate-x-2 transition-transform duration-500" />
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
                     </motion.div>
-                ))}
-            </motion.div>
+                </div>
+            </div>
         </div>
     );
 }

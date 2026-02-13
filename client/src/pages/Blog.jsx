@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Pagination from "../components/Pagination";
-import { useEffect } from "react";
 import api from "../api/axios";
 
 export default function BlogPage() {
@@ -9,7 +8,7 @@ export default function BlogPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 8;
+    const postsPerPage = 9;
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -40,134 +39,138 @@ export default function BlogPage() {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-[600px]">
-                <div className="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+            <div className="flex items-center justify-center min-h-[600px] bg-white">
+                <div className="w-10 h-10 border-2 border-slate-900 border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[600px] text-center px-4">
-                <h2 className="text-2xl font-bold text-slate-900 mb-2">Oops! Something went wrong</h2>
-                <p className="text-gray-500 mb-6">{error}</p>
+            <div className="flex flex-col items-center justify-center min-h-[600px] text-center px-4 bg-white">
+                <h2 className="text-xl font-bold text-slate-900 mb-2">Notice</h2>
+                <p className="text-slate-500 mb-6 text-sm">{error}</p>
                 <button
                     onClick={() => window.location.reload()}
-                    className="bg-black text-white px-6 py-2 rounded-full font-bold hover:bg-gray-800 transition-colors"
+                    className="border border-slate-200 text-slate-900 px-6 py-2 rounded-full text-xs font-bold hover:bg-slate-50 transition-colors"
                 >
-                    Try Again
+                    Retry Connection
                 </button>
             </div>
         );
     }
 
     return (
-        <div className="container pt-8 pb-12 md:pt-16 md:pb-24 px-4 mx-auto overflow-hidden bg-white">
-            <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="flex flex-col items-center gap-4 mb-20 text-center"
-            >
-                <h1 className="text-6xl font-black text-slate-900 tracking-tighter sm:text-6xl text-black uppercase">
-                    Blog
-                </h1>
-                <p className="text-lg text-gray-400 max-w-xl font-medium tracking-tight">
-                    Videos on building, scaling, and the creative process.
-                </p>
-            </motion.div>
+        <div className="bg-white min-h-screen selection:bg-slate-900 selection:text-white">
+            {/* Studio Masthead */}
+            <header className="pt-24 pb-20 px-4 lg:px-24 xl:px-32">
+                <div className="max-w-screen-2xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: "circOut" }}
+                        className="space-y-4"
+                    >
+                        <div className="flex items-center gap-3">
+                            <span className="h-1.5 w-1.5 rounded-full bg-slate-900" />
+                            <span className="text-[10px] font-bold tracking-[0.4em] text-slate-400 uppercase">Archive Index</span>
+                        </div>
+                        <h1 className="text-5xl md:text-7xl font-black text-slate-950 tracking-tighter uppercase leading-none font-sans">
+                            THE <span className="text-slate-300">MODERN</span> GALLERY
+                        </h1>
+                        <p className="text-slate-400 text-sm max-w-md font-medium leading-relaxed tracking-tight">
+                            A curated exhibition of digital craft, building cycles, and creative observations.
+                        </p>
+                    </motion.div>
+                </div>
+            </header>
 
-            <div className="max-w-5xl mx-auto">
-                <motion.div
-                    layout
-                    className="grid gap-x-4 gap-y-10 sm:gap-x-10 sm:gap-y-16 grid-cols-2"
-                >
-                    <AnimatePresence mode="popLayout">
-                        {currentPosts.map((post, index) => (
-                            <motion.div
-                                key={post._id}
-                                layout
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
-                                transition={{
-                                    duration: 0.5,
-                                    delay: index * 0.05,
-                                    ease: [0.215, 0.61, 0.355, 1]
-                                }}
-                                className="group flex flex-col"
-                            >
-                                {/* WRAPPER LINK FOR THUMBNAIL */}
-                                <a
-                                    href={post.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="relative aspect-[16/10] overflow-hidden bg-gray-100 rounded-sm cursor-pointer"
+            <main className="px-4 lg:px-24 xl:px-32 pb-32">
+                <div className="max-w-screen-2xl mx-auto space-y-20">
+
+                    {/* Modern Architectural Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-20">
+                        <AnimatePresence mode="popLayout">
+                            {currentPosts.map((post, index) => (
+                                <motion.div
+                                    key={post._id}
+                                    layout
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.05, duration: 0.6 }}
+                                    className="group flex flex-col cursor-pointer"
                                 >
-                                    <motion.img
-                                        whileHover={{ scale: 1.03 }}
-                                        transition={{ duration: 0.6, ease: "circOut" }}
-                                        src={post.thumbnail}
-                                        alt={post.title}
-                                        className="w-full h-full object-cover transition-all duration-700"
-                                    />
-                                    <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4">
-                                        <span className="bg-black text-white px-2 py-0.5 sm:px-3 sm:py-1 text-[8px] sm:text-[10px] font-bold tracking-[0.2em]">
-                                            EP {post.episode}
-                                        </span>
-                                    </div>
-                                </a>
+                                    <a href={post.link} target="_blank" rel="noopener noreferrer" className="block space-y-8">
+                                        {/* Image Container with Embedded Meta */}
+                                        <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-50 transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]">
+                                            <img
+                                                src={post.thumbnail}
+                                                alt={post.title}
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            />
 
-                                <div className="mt-4 sm:mt-8 space-y-2 sm:space-y-3">
-                                    <div className="text-[9px] sm:text-[11px] font-bold text-gray-400 tracking-[0.2em] uppercase">
-                                        {post.date}
-                                    </div>
+                                            {/* Top-Right Tag */}
+                                            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                <div className="bg-white/90 backdrop-blur text-[8px] font-black text-slate-950 px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
+                                                    Enter
+                                                </div>
+                                            </div>
 
-                                    {/* WRAPPER LINK FOR TITLE */}
-                                    <a href={post.link} target="_blank" rel="noopener noreferrer">
-                                        {/* Adjusted font size for mobile: text-lg vs text-2xl */}
-                                        <h3 className="text-sm sm:text-2xl font-bold text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300 cursor-pointer line-clamp-2">
-                                            {post.title}
-                                        </h3>
-                                        {post.description && (
-                                            <p className="text-gray-500 text-xs sm:text-sm line-clamp-3 font-medium leading-relaxed">
+                                            {/* Bottom-Left Embedded Badge */}
+                                            <div className="absolute bottom-4 left-4">
+                                                <div className="bg-slate-950/80 backdrop-blur-md px-3 py-1.5 rounded-xl flex items-center gap-2 border border-white/10">
+                                                    <span className="text-[9px] font-black text-white uppercase tracking-widest">EP {post.episode}</span>
+                                                    <div className="h-2 w-px bg-white/20" />
+                                                    <span className="text-[8px] font-bold text-slate-300 uppercase tracking-widest">{post.date}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Content Below */}
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-900">Observation</span>
+                                                {index === 0 && currentPage === 1 && (
+                                                    <div className="flex items-center gap-1.5">
+                                                        <div className="h-1 w-1 rounded-full bg-blue-600 animate-pulse" />
+                                                        <span className="text-[9px] font-bold text-blue-600 uppercase tracking-widest">Newest</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <h3 className="text-xl md:text-2xl font-black text-slate-950 tracking-tight leading-tight uppercase group-hover:text-blue-600 transition-colors duration-300">
+                                                {post.title}
+                                            </h3>
+                                            <p className="text-slate-400 text-sm leading-relaxed line-clamp-2 font-medium">
                                                 {post.description}
                                             </p>
-                                        )}
+                                        </div>
                                     </a>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </div>
 
-                                    <div className="relative pt-1 sm:pt-2 w-fit">
-                                        <a
-                                            href={post.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-[10px] sm:text-[13px] font-bold uppercase tracking-widest text-black cursor-pointer"
-                                        >
-                                            Read Article
-                                        </a>
-                                        <div className="absolute -bottom-1 left-0 h-[2px] w-0 bg-black group-hover:w-full transition-all duration-500 ease-in-out" />
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </AnimatePresence>
-                </motion.div>
-            </div>
-            <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                className="border-t border-gray-100 pt-12"
-            >
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={(page) => {
-                        setCurrentPage(page);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                />
-            </motion.div>
+                    {/* Modern Centered Pagination */}
+                    {/* <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="mt-24 flex flex-col items-center gap-6" // Reduced gap
+                    >
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            onPageChange={(page) => {
+                                setCurrentPage(page);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                        />
+                        <span className="text-[10px] font-black text-slate-200 uppercase tracking-[1em] block text-center">
+                            End Observation
+                        </span>
+                    </motion.div> */}
+                </div>
+            </main>
         </div>
     );
 }

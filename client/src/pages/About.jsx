@@ -27,7 +27,7 @@ export default function About() {
             variants={staggerContainer}
             className="bg-white selection:bg-blue-100"
         >
-            <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 md:py-20 space-y-12 md:space-y-16">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12 py-8 md:py-12 space-y-8 md:space-y-12">
 
                 {/* --- HERO SECTION: Minimalist Founder Layout --- */}
                 <header className="relative border-b border-slate-100 pb-8 md:pb-12">
@@ -150,79 +150,6 @@ export default function About() {
                             </div>
                         </motion.div>
                     </div>
-                </section>
-
-                {/* --- INVESTMENTS: Vertical Stacked Layout --- */}
-                <section className="pt-12 pb-24 border-t border-slate-100 mb-0">
-                    <div className="max-w-4xl">
-                        <div className="space-y-6 mb-16">
-                            <h2 className="text-[#2563eb] font-bold uppercase tracking-[0.3em] text-xs">
-                                Community & Collaborations
-                            </h2>
-                            <p className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-[1.1] tracking-tighter">
-                                I support the voices <br />
-                                <span className="text-slate-400">that shape our future.</span>
-                            </p>
-                        </div>
-
-                        {/* Replace your previous company logos with Literary/Cultural partners */}
-                        <div className="flex flex-wrap items-center gap-x-16 gap-y-10">
-                            {[sahityaAkademi, penguinIndia, gujaratLiteratureFest].map((logo, i) => (
-                                <motion.img
-                                    key={i}
-                                    whileHover={{ y: -4, opacity: 1 }}
-                                    src={logo}
-                                    alt="Literary Partner Logo"
-                                    className="h-10 w-auto object-contain opacity-40 grayscale hover:grayscale-0 transition-all duration-300 cursor-pointer"
-                                />
-                            ))}
-                        </div>
-
-                        <p className="mt-8 text-slate-500 text-sm font-medium italic">
-                            *Proudly supporting independent Indian publishers and regional storytelling initiatives.
-                        </p>
-                    </div>
-                </section>
-
-                {/* --- STORY: Cinematic Feature --- */}
-                <section className="space-y-12">
-                    <div className="flex items-end justify-between border-b border-slate-100 pb-8">
-                        <h2 className="text-5xl font-black tracking-tighter text-slate-900">Featured Essays</h2>
-                        <a href="#" className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-600 group">
-                            Read the Journal <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                        </a>
-                    </div>
-
-                    <motion.div
-                        whileHover={{ y: -10 }}
-                        className="group relative cursor-pointer"
-                    >
-                        <div className="relative aspect-[16/9] md:aspect-[2.4/1] w-full overflow-hidden rounded-3xl bg-slate-100 shadow-xl">
-                            {/* Image: Use something atmospheric like a misty Indian landscape or an ancient library */}
-                            <img
-                                src={lothal}
-                                alt="Ancient Roots"
-                                className="w-full h-full object-cover transition-all duration-[1.5s] group-hover:scale-105"
-                            />
-
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-
-                            <div className="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10 space-y-2 md:space-y-4">
-                                <p className="text-white/70 text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">
-                                    The Heritage Series
-                                </p>
-
-                                <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-[0.9]">
-                                    Finding silence in the <br className="md:hidden" />
-                                    <span className="text-blue-400">ruins of lothal</span>
-                                </h3>
-
-                                <div className="pt-2">
-                                    <div className="w-8 h-1 bg-blue-500 rounded-full group-hover:w-16 transition-all duration-500" />
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
                 </section>
             </div>
         </motion.div>

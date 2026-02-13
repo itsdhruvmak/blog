@@ -47,7 +47,7 @@ const Cart = () => {
     }
 
     return (
-        <div className="max-w-6xl mx-auto px-4 py-12 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 py-8 md:py-16">
             <h1 className="text-4xl font-black text-slate-900 tracking-tighter uppercase mb-12">Shopping Cart</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
