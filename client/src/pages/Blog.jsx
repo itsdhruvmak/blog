@@ -4,91 +4,66 @@ import Pagination from "../components/Pagination";
 import blogVideo from "../assets/blogVideo.jpg";
 import literature from "../assets/literaturre.jpg";
 import lothal from "../assets/lothal.png";
+import { useEffect } from "react";
+import api from "../api/axios";
 
-const posts = [
-    {
-        id: 1,
-        title: "The Art of Descriptive Prose: Capturing the Soul of Indian Cities",
-        episode: "Lecture 114",
-        date: "February 5, 2026",
-        thumbnail: lothal,
-        link: "https://en.wikipedia.org/wiki/Lothal",
-    },
-    {
-        id: 2,
-        title: "The Great Indian Novel: How to Structure Multi-Generational Sagas",
-        episode: "Workshop 113",
-        date: "January 29, 2026",
-        thumbnail: literature,
-        link: "https://en.wikipedia.org/wiki/Category:Ancient_Indian_literature",
-    },
-    {
-        id: 3,
-        title: "Literature in the Digital Age: Bridging Sanskrit Roots with Modern Fiction",
-        episode: "Keynote 112",
-        date: "January 22, 2026",
-        thumbnail: lothal,
-        link: "https://en.wikipedia.org/wiki/Lothal",
-    },
-    {
-        id: 4,
-        title: "From Manuscript to Bestseller: The Reality of Indian Publishing",
-        episode: "Guide 111",
-        date: "January 15, 2026",
-        thumbnail: literature,
-        link: "https://en.wikipedia.org/wiki/Category:Ancient_Indian_literature",
-    },
-    {
-        id: 5,
-        title: "The Ahmedabad Chronicles: Researching the Hidden History of Gujarat",
-        episode: "BTS 110",
-        date: "January 08, 2026",
-        thumbnail: lothal,
-        link: "https://en.wikipedia.org/wiki/Lothal",
-    },
-    {
-        id: 6,
-        title: "Poetry of the People: Why Vernacular Languages Still Matter",
-        episode: "Panel 109",
-        date: "January 01, 2026",
-        thumbnail: literature,
-        link: "https://en.wikipedia.org/wiki/Category:Ancient_Indian_literature",
-    },
-    {
-        id: 7,
-        title: "Finding Your Voice: My Journey from Journalism to Fiction",
-        episode: "Memoir 108",
-        date: "December 25, 2025",
-        thumbnail: lothal,
-        link: "https://en.wikipedia.org/wiki/Lothal",
-    },
-    {
-        id: 8,
-        title: "Character Study: Building Relatable Protagonists in Indian Settings",
-        episode: "Masterclass 107",
-        date: "December 18, 2025",
-        thumbnail: literature,
-        link: "https://en.wikipedia.org/wiki/Category:Ancient_Indian_literature",
-    },
-    {
-        id: 9,
-        title: "Writing Resilience: How Stories Help Us Heal as a Society",
-        episode: "Talk 106",
-        date: "December 11, 2025",
-        thumbnail: lothal,
-        link: "https://en.wikipedia.org/wiki/Lothal",
-    }
-];
 
 export default function BlogPage() {
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 8;
+
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                setLoading(true);
+                const response = await api.get("/api/blogs");
+                if (response.data.success) {
+                    setPosts(response.data.data);
+                } else {
+                    setError("Failed to fetch blogs");
+                }
+            } catch (err) {
+                console.error("Error fetching blogs:", err);
+                setError("An error occurred while fetching blogs");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchBlogs();
+    }, []);
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
     const totalPages = Math.ceil(posts.length / postsPerPage);
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[600px]">
+                <div className="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[600px] text-center px-4">
+                <h2 className="text-2xl font-bold text-slate-900 mb-2">Oops! Something went wrong</h2>
+                <p className="text-gray-500 mb-6">{error}</p>
+                <button
+                    onClick={() => window.location.reload()}
+                    className="bg-black text-white px-6 py-2 rounded-full font-bold hover:bg-gray-800 transition-colors"
+                >
+                    Try Again
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className="container pt-8 pb-12 md:pt-16 md:pb-24 px-4 mx-auto overflow-hidden bg-white">
@@ -114,7 +89,7 @@ export default function BlogPage() {
                     <AnimatePresence mode="popLayout">
                         {currentPosts.map((post, index) => (
                             <motion.div
-                                key={post.id}
+                                key={post._id}
                                 layout
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}

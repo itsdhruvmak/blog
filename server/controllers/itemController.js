@@ -64,8 +64,11 @@ export const editProduct = async (req, res) => {
         if (itemDetails.image) item.image = itemDetails.image
         if (itemDetails.category) item.category = itemDetails.category
         if (itemDetails.subCategory) item.subCategory = itemDetails.subCategory
+        if (itemDetails.price) item.price = itemDetails.price
+        if (itemDetails.stock) item.stock = itemDetails.stock
 
         await item.save()
+
 
         return res.status(200).json({ message: "Item updated successfully", data: item })
     } catch (error) {

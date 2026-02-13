@@ -12,7 +12,7 @@ const AdminLogin = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post('/api/auth/login', { password });
+            const response = await api.post('/api/auth/admin/login', { password });
             // localStorage.setItem('adminToken', response.data.token);
             navigate('/admin/dashboard');
         } catch (err) {

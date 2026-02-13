@@ -1,13 +1,16 @@
 import api from "../api/axios";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import appDesign from "../assets/appDesign.png";
 import commit from "../assets/commitApp.png";
 import psImg from "../assets/psImg.png";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Loader2, ShoppingCart, CheckCircle2 } from "lucide-react";
 import poetryBookImg from "../assets/robin.jpg";
 import essaySeriesImg from "../assets/discover.jpg";
 import memoirImg from "../assets/monk.jpg";
+import { useAuth } from "../AuthContext";
+import { useCart } from "../CartContext";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const expiredItems = [
     {
@@ -60,6 +63,11 @@ const itemVariants = {
 export default function Items() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [purchaseSuccess, setPurchaseSuccess] = useState(null);
+    const { user } = useAuth();
+    const { addToCart } = useCart();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const getBooks = async () => {
         setLoading(true);
@@ -71,6 +79,19 @@ export default function Items() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleBuyNow = async (item) => {
+        if (!user) {
+            // Redirect to auth page and save the current location to return after login
+            navigate("/auth", { state: { from: location } });
+            return;
+        }
+
+        // Add to cart instead of dummy purchase
+        await addToCart(item._id, 1);
+        setPurchaseSuccess(item._id);
+        setTimeout(() => setPurchaseSuccess(null), 3000);
     };
 
     useEffect(() => {
@@ -123,37 +144,62 @@ export default function Items() {
                         <div className="relative aspect-[16/11] overflow-hidden rounded-[1.5rem] bg-slate-50">
                             <img
                                 src={item.image}
-                                alt={item.title}
+                                alt={item.name}
                                 className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                             />
-                            <div className="absolute top-4 left-4">
+                            <div className="absolute top-4 left-4 flex flex-col gap-2">
                                 <span className="backdrop-blur-md bg-white/70 border border-white/40 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.15em] text-slate-800">
                                     {item.subCategory}
                                 </span>
+                                {item.price && (
+                                    <span className="backdrop-blur-md bg-blue-600/90 border border-blue-400 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.15em] text-white">
+                                        ₹{item.price}
+                                    </span>
+                                )}
                             </div>
                         </div>
 
                         {/* Content Area */}
                         <div className="px-2 md:px-4 pt-6 md:pt-8 pb-4 flex flex-col flex-1">
                             <h3 className="text-2xl font-black mb-3 tracking-tighter text-slate-900 group-hover:text-blue-600 transition-colors">
-                                {item.title}
+                                {item.name}
                             </h3>
-                            <p className="text-slate-500 text-sm leading-relaxed mb-6 md:mb-8 line-clamp-3">
+                            <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-3">
                                 {item.description}
                             </p>
-                            <div className="mt-auto flex items-center justify-between gap-4">
-                                <button className="flex-1 bg-slate-900 cursor-pointer text-white py-3 px-4 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-blue-600 transition-all duration-300 active:scale-95">
-                                    {item.category === "book" ? "Learn More" : `Visit ${item.subCategory}`}
-                                </button>
-                                <button className="group/link flex items-center cursor-pointer gap-2 text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors">
-                                    {item.category === "book" ? "Case Study" : "Articles"}
-                                    <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" />
-                                </button>
+
+                            <div className="mt-auto flex flex-col gap-4">
+                                <div className="flex items-center justify-between gap-4">
+                                    <button
+                                        onClick={() => handleBuyNow(item)}
+                                        className={`flex-1 flex items-center justify-center gap-2 cursor-pointer py-3 px-4 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-widest transition-all duration-300 active:scale-95 ${purchaseSuccess === item._id
+                                            ? "bg-green-500 text-white"
+                                            : "bg-slate-900 text-white hover:bg-blue-600"
+                                            }`}
+                                    >
+                                        {purchaseSuccess === item._id ? (
+                                            <>
+                                                <CheckCircle2 size={16} />
+                                                Success
+                                            </>
+                                        ) : (
+                                            <>
+                                                <ShoppingCart size={16} />
+                                                {item.category === "book" ? "Buy Now" : "Pre-order"}
+                                            </>
+                                        )}
+                                    </button>
+                                    <button className="group/link flex items-center cursor-pointer gap-2 text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors">
+                                        Details
+                                        <ArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </motion.div>
                 ))}
             </motion.div>
+
 
             {/* --- RETIRED PRODUCTS SECTION --- */}
             <hr className="my-12 md:my-16 border-slate-100" />

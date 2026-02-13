@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Twitter, Instagram, Linkedin, Mail } from "lucide-react"; // Swapped Github for Instagram (better for writers)
+import { Twitter, Instagram, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
     return (

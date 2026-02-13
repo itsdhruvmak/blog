@@ -10,6 +10,9 @@ requiredEnv.forEach(env => {
 import connectDB from './config/db.js'
 import itemRouter from './routes/itemRoutes.js'
 import authRouter from './routes/authRoutes.js'
+import cartRouter from './routes/cartRoutes.js'
+import orderRouter from './routes/orderRoutes.js'
+import blogRouter from './routes/blogRoutes.js'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
@@ -20,10 +23,7 @@ app.use(express.json());
 
 app.use(cors({
     origin: function (origin, callback) {
-        // 1. Allow requests with no origin (like mobile apps or curl)
         if (!origin) return callback(null, true);
-
-        // 2. Trust ALL Vercel domains and Localhost
         const isVercel = origin.endsWith('.vercel.app');
         const isLocal = origin.startsWith('http://localhost');
 
@@ -46,6 +46,9 @@ app.get("/", (req, res) => {
 
 app.use("/api/items", itemRouter)
 app.use("/api/auth", authRouter)
+app.use("/api/cart", cartRouter)
+app.use("/api/order", orderRouter)
+app.use("/api/blogs", blogRouter)
 
 connectDB()
 

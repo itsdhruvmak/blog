@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
@@ -12,6 +12,7 @@ import userImage from "../assets/userImage.png"
 import blogVideo from "../assets/blogVideo.jpg"
 import lothal from "../assets/lothal.png"
 import literature from "../assets/literaturre.jpg"
+import api from '../api/axios';
 
 
 // Animation Variants
@@ -73,6 +74,26 @@ const posts = [
 
 export default function Home() {
     const navigate = useNavigate();
+    const [blogs, setBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const fetchBlogs = async () => {
+        try {
+            const response = await api.get('/api/blogs');
+            if (response.data.success) {
+                setBlogs(response.data.data);
+            }
+        } catch (err) {
+            console.error("Failed to fetch blogs", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchBlogs();
+    }, []);
+
     return (
         <div className="flex flex-col min-h-screen overflow-x-hidden">
 
@@ -328,92 +349,93 @@ export default function Home() {
                     </div>
 
                     {/* Modern Asymmetric Grid */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            className="lg:col-span-7 group cursor-pointer"
-                        >
-                            <div className="relative aspect-[16/10] rounded-3xl overflow-hidden bg-slate-100 mb-6">
-                                <img
-                                    src={lothal}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                />
-                                <div className="absolute top-6 left-6">
-                                    <span className="bg-black text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
-                                        Featured
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="space-y-4">
-                                <div className="flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-widest">
-                                    <span>Ep. {posts[0].episode}</span>
-                                    <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
-                                    <span className="text-slate-400">{posts[0].date}</span>
-                                </div>
-                                <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 group-hover:text-gray-900 transition-colors leading-tight">
-                                    {posts[0].title}
-                                </h3>
-                                <p className="text-slate-500 text-lg leading-relaxed max-w-2xl">
-                                    Nathan breaks down the exact flywheels used to scale Kit to a $45M powerhouse while maintaining 100% ownership.
-                                </p>
-                            </div>
-                        </motion.div>
-
-                        {/* RIGHT: Stacked Secondary Posts (Takes 5/12 columns) */}
-                        <div className="lg:col-span-5 flex flex-col gap-8">
-                            {posts.slice(1, 4).map((post) => (
-                                <motion.div
-                                    key={post.id}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    className="group flex gap-6 items-center p-4 rounded-3xl hover:bg-slate-50 transition-colors cursor-pointer"
-                                >
-                                    <div className="w-32 h-32 flex-shrink-0 rounded-2xl overflow-hidden bg-slate-200">
-                                        <img src={lothal} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                                            {post.date}
-                                        </p>
-                                        <h4 className="text-lg font-bold text-slate-900 group-hover:text-gray-900 transition-colors leading-snug">
-                                            {post.title}
-                                        </h4>
-                                        <div className="flex items-center gap-2 text-blue-600 font-bold text-xs">
-                                            Read More <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            ))}
-
-                            <motion.div
-                                whileHover={{ y: -5 }}
-                                className="bg-blue-600 rounded-3xl p-8 text-white relative overflow-hidden"
-                            >
-                                <div className="relative z-10">
-                                    <h4 className="text-xl font-bold mb-2">Want the highlights?</h4>
-                                    <p className="text-blue-100 text-sm mb-6">Join 50,000+ creators getting weekly strategy deep dives.</p>
-                                    <button className="w-full bg-white text-blue-600 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors">
-                                        Join the Newsletter
-                                    </button>
-                                </div>
-                                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-500 rounded-full opacity-50 shadow-inner"></div>
-                            </motion.div>
+                    {loading ? (
+                        <div className="flex justify-center items-center py-20">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
                         </div>
+                    ) : blogs.length > 0 ? (
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                            {/* LEFT: Featured Post (First one) */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                className="lg:col-span-7 group cursor-pointer"
+                                onClick={() => blogs[0].link && window.open(blogs[0].link, '_blank')}
+                            >
+                                <div className="relative aspect-[16/10] rounded-3xl overflow-hidden bg-slate-100 mb-6">
+                                    <img
+                                        src={blogs[0].thumbnail}
+                                        alt={blogs[0].title}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    />
+                                    <div className="absolute top-6 left-6">
+                                        <span className="bg-black text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
+                                            Latest
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-3 text-sm font-bold text-blue-600 uppercase tracking-widest">
+                                        <span>Ep. {blogs[0].episode}</span>
+                                        <span className="w-1 h-1 bg-slate-300 rounded-full"></span>
+                                        <span className="text-slate-400">{blogs[0].date}</span>
+                                    </div>
+                                    <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors leading-tight">
+                                        {blogs[0].title}
+                                    </h3>
+                                    <p className="text-slate-500 text-lg leading-relaxed max-w-2xl line-clamp-2">
+                                        Check out the latest update and deep dive into our most recent story.
+                                    </p>
+                                </div>
+                            </motion.div>
 
-                    </div>
+                            {/* RIGHT: Stacked Secondary Posts (Takes 5/12 columns) */}
+                            <div className="lg:col-span-5 flex flex-col gap-8">
+                                {blogs.slice(1, 4).map((post) => (
+                                    <motion.div
+                                        key={post._id}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        className="group flex gap-6 items-center p-4 rounded-3xl hover:bg-slate-50 transition-colors cursor-pointer"
+                                        onClick={() => post.link && window.open(post.link, '_blank')}
+                                    >
+                                        <div className="w-32 h-32 flex-shrink-0 rounded-2xl overflow-hidden bg-slate-200">
+                                            <img src={post.thumbnail} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                {post.date}
+                                            </p>
+                                            <h4 className="text-lg font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug line-clamp-2">
+                                                {post.title}
+                                            </h4>
+                                            <div className="flex items-center gap-2 text-blue-600 font-bold text-xs">
+                                                Read More <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
 
-                    {/* Footer Link / Pagination */}
-                    <div className="mt-8 md:mt-12 border-t border-slate-100 pt-8">
-                        <Pagination
-                            currentPage={1}
-                            totalPages={52}
-                            onPageChange={(page) => {
-                                if (page === 1) navigate('/blog');
-                                else navigate(`/blog?page=${page}`);
-                            }}
-                        />
-                    </div>
+                                <motion.div
+                                    whileHover={{ y: -5 }}
+                                    className="bg-blue-600 rounded-3xl p-8 text-white relative overflow-hidden"
+                                >
+                                    <div className="relative z-10">
+                                        <h4 className="text-xl font-bold mb-2">Want the highlights?</h4>
+                                        <p className="text-blue-100 text-sm mb-6">Join 50,000+ creators getting weekly strategy deep dives.</p>
+                                        <button className="w-full bg-white text-blue-600 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors">
+                                            Join the Newsletter
+                                        </button>
+                                    </div>
+                                    <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-500 rounded-full opacity-50 shadow-inner"></div>
+                                </motion.div>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="text-center py-20 text-slate-500 font-medium">
+                            No blog posts found. Check back later!
+                        </div>
+                    )}
                 </div>
             </section>
         </div>

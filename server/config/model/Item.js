@@ -6,7 +6,9 @@ const itemSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
     image: { type: String },
-    isDeleted: { type: Boolean, default: false }
+    isDeleted: { type: Boolean, default: false },
+    price: { type: Number },
+    stock: { type: Number }
 })
 
 const Item = mongoose.model("Item", itemSchema)

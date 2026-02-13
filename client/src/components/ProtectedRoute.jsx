@@ -8,8 +8,12 @@ const ProtectedRoute = () => {
     useEffect(() => {
         const checkSession = async () => {
             try {
-                await api.get('/api/auth/check-auth');
-                setStatus('authenticated');
+                const res = await api.get('/api/auth/admin/check-auth');
+                if (res.data.authenticated) {
+                    setStatus('authenticated');
+                } else {
+                    setStatus('unauthenticated');
+                }
             } catch (err) {
                 setStatus('unauthenticated');
             }

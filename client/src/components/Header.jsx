@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Twitter, Youtube, Search } from "lucide-react";
+import { Menu, X, Twitter, Youtube, Search, User as UserIcon, LogOut, ShoppingCart } from "lucide-react";
+import { useAuth } from "../AuthContext";
+import { useCart } from "../CartContext";
 
 const cn = (...classes) => classes.filter(Boolean).join(" ");
 
@@ -17,6 +19,8 @@ export default function Header() {
     const pathname = location.pathname;
     const [isOpen, setIsOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const { user, logout } = useAuth();
+    const { cartCount } = useCart();
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
@@ -63,35 +67,87 @@ export default function Header() {
                         </a>
                     </div>
 
-                    <div className="flex items-center">
-                        <AnimatePresence>
-                            {isSearchOpen && (
-                                <motion.input
-                                    initial={{ width: 0, opacity: 0 }}
-                                    animate={{ width: 160, opacity: 1 }}
-                                    exit={{ width: 0, opacity: 0 }}
-                                    type="text"
-                                    placeholder="Search..."
-                                    className="text-sm bg-transparent border-b border-slate-200 focus:outline-none focus:border-black text-black mr-2 pb-1"
-                                    autoFocus
-                                />
+                    <div className="flex items-center gap-4">
+                        {user ? (
+                            <div className="flex items-center gap-4">
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-900 bg-slate-100 px-3 py-1.5 rounded-full">
+                                    {user.name}
+                                </span>
+                                <button
+                                    onClick={logout}
+                                    className="p-2 border border-slate-200 rounded-xl hover:bg-red-50 hover:border-red-100 hover:text-red-600 transition-all group"
+                                    title="Logout"
+                                >
+                                    <LogOut size={18} />
+                                </button>
+                            </div>
+                        ) : (
+                            <Link
+                                to="/auth"
+                                className="flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-slate-200"
+                            >
+                                <UserIcon size={14} />
+                                Login
+                            </Link>
+                        )}
+
+                        <div className="flex items-center ml-2">
+                            <AnimatePresence>
+                                {isSearchOpen && (
+                                    <motion.input
+                                        initial={{ width: 0, opacity: 0 }}
+                                        animate={{ width: 140, opacity: 1 }}
+                                        exit={{ width: 0, opacity: 0 }}
+                                        type="text"
+                                        placeholder="Search..."
+                                        className="text-sm bg-transparent border-b border-slate-200 focus:outline-none focus:border-black text-black mr-2 pb-1"
+                                        autoFocus
+                                    />
+                                )}
+                            </AnimatePresence>
+                            <button
+                                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                                className="hover:text-black transition-colors"
+                            >
+                                <Search size={18} />
+                            </button>
+                        </div>
+                        <Link to="/cart" className="relative p-2 text-slate-600 hover:text-black transition-colors">
+                            <ShoppingCart size={20} />
+                            {cartCount > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-[8px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+                                    {cartCount}
+                                </span>
                             )}
-                        </AnimatePresence>
-                        <button
-                            onClick={() => setIsSearchOpen(!isSearchOpen)}
-                            className="hover:text-black transition-colors"
-                        >
-                            <Search size={18} />
-                        </button>
+                        </Link>
                     </div>
                 </div>
 
                 {/* MOBILE & TABLET TOGGLE: Visible until Large (lg:hidden) */}
                 <div className="flex items-center gap-2 lg:hidden">
+                    {user ? (
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-900 bg-slate-100 px-3 py-1.5 rounded-full">
+                            {user.name?.split(' ')[0] || 'User'}
+                        </span>
+                    ) : (
+                        <Link to="/auth" className="p-2 text-slate-600 hover:text-black transition-colors">
+                            <UserIcon size={20} />
+                        </Link>
+                    )}
+
+                    <Link to="/cart" className="relative p-2 text-slate-600 hover:text-black transition-colors">
+                        <ShoppingCart size={20} />
+                        {cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-[8px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
+                                {cartCount}
+                            </span>
+                        )}
+                    </Link>
+
                     <button
                         onClick={() => {
                             setIsSearchOpen(!isSearchOpen);
-                            if (isOpen) setIsOpen(false); // Close menu if search opens
+                            if (isOpen) setIsOpen(false);
                         }}
                         className="p-2 text-slate-600 hover:text-black transition-colors"
                         aria-label="Search"
@@ -170,6 +226,21 @@ export default function Header() {
                                     </Link>
                                 </motion.div>
                             ))}
+
+                            {user && (
+                                <motion.button
+                                    initial={{ x: -20, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ delay: navItems.length * 0.05 }}
+                                    onClick={() => {
+                                        logout();
+                                        setIsOpen(false);
+                                    }}
+                                    className="text-3xl font-black tracking-tighter uppercase text-red-400 hover:text-red-500 text-left transition-colors flex items-center gap-4"
+                                >
+                                    Logout <LogOut size={24} />
+                                </motion.button>
+                            )}
                         </nav>
 
                         <div className="flex gap-8 mt-12 pt-8 border-t border-slate-100 text-slate-400">
