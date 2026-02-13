@@ -1,4 +1,4 @@
-import Footer from './components/footer'
+import Footer from './components/Footer'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Items from './pages/Items'
