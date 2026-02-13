@@ -12,7 +12,7 @@ export const getBlogs = async (req, res) => {
 
 export const createBlog = async (req, res) => {
     try {
-        const { title, episode, date, link } = req.body;
+        const { title, episode, date, link, description } = req.body;
 
         if (!title || !link) {
             return res.status(400).json({ success: false, message: "Title and Link are required" });
@@ -39,7 +39,8 @@ export const createBlog = async (req, res) => {
             episode,
             date,
             thumbnail: thumbnailURL,
-            link
+            link,
+            description
         });
 
         await newBlog.save();

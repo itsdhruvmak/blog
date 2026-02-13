@@ -82,13 +82,21 @@ export default function Header() {
                                 </button>
                             </div>
                         ) : (
-                            <Link
-                                to="/auth"
-                                className="flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-slate-200"
-                            >
-                                <UserIcon size={14} />
-                                Login
-                            </Link>
+                            <div className="flex items-center gap-3">
+                                <Link
+                                    to="/admin/login"
+                                    className="text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors"
+                                >
+                                    Admin
+                                </Link>
+                                <Link
+                                    to="/auth"
+                                    className="flex items-center gap-2 bg-slate-900 text-white px-5 py-2.5 rounded-xl text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-slate-200"
+                                >
+                                    <UserIcon size={14} />
+                                    Login
+                                </Link>
+                            </div>
                         )}
 
                         <div className="flex items-center ml-2">
@@ -227,11 +235,26 @@ export default function Header() {
                                 </motion.div>
                             ))}
 
+                            {!user && (
+                                <motion.div
+                                    initial={{ x: -20, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ delay: navItems.length * 0.05 }}
+                                >
+                                    <Link
+                                        to="/admin/login"
+                                        onClick={() => setIsOpen(false)}
+                                        className="text-3xl font-black tracking-tighter uppercase text-slate-400 hover:text-slate-600 transition-colors"
+                                    >
+                                        Admin
+                                    </Link>
+                                </motion.div>
+                            )}
                             {user && (
                                 <motion.button
                                     initial={{ x: -20, opacity: 0 }}
                                     animate={{ x: 0, opacity: 1 }}
-                                    transition={{ delay: navItems.length * 0.05 }}
+                                    transition={{ delay: (navItems.length + 1) * 0.05 }}
                                     onClick={() => {
                                         logout();
                                         setIsOpen(false);

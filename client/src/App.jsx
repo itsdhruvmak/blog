@@ -25,10 +25,11 @@ function App() {
   const location = useLocation()
 
   const isAdminPath = location.pathname.startsWith('/admin');
+  const isLoginPath = location.pathname.startsWith('/auth');
   return (
     <>
       <ScrollToTop />
-      {!isAdminPath && <Header />}
+      {!isAdminPath && !isLoginPath && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/items" element={<Items />} />
@@ -37,18 +38,16 @@ function App() {
         <Route path="/auth" element={<Auth />} />
         <Route path="/cart" element={<Cart />} />
 
-        {/* User Protected Routes */}
         <Route element={<UserProtectedRoute />}>
           <Route path="/checkout" element={<Checkout />} />
         </Route>
 
         <Route path="/admin/login" element={<AdminLogin />} />
-        {/* Admin Protected Routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Route>
       </Routes>
-      {!isAdminPath && <Footer />}
+      {!isAdminPath && !isLoginPath && <Footer />}
     </>
   )
 }

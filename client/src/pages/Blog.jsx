@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Pagination from "../components/Pagination";
-import blogVideo from "../assets/blogVideo.jpg";
-import literature from "../assets/literaturre.jpg";
-import lothal from "../assets/lothal.png";
 import { useEffect } from "react";
 import api from "../api/axios";
-
 
 export default function BlogPage() {
     const [posts, setPosts] = useState([]);
@@ -81,7 +77,7 @@ export default function BlogPage() {
                 </p>
             </motion.div>
 
-            <div className="max-w-5xl mx-auto min-h-[600px]">
+            <div className="max-w-5xl mx-auto">
                 <motion.div
                     layout
                     className="grid gap-x-4 gap-y-10 sm:gap-x-10 sm:gap-y-16 grid-cols-2"
@@ -133,6 +129,11 @@ export default function BlogPage() {
                                         <h3 className="text-sm sm:text-2xl font-bold text-black leading-tight tracking-tight group-hover:text-gray-600 transition-colors duration-300 cursor-pointer line-clamp-2">
                                             {post.title}
                                         </h3>
+                                        {post.description && (
+                                            <p className="text-gray-500 text-xs sm:text-sm line-clamp-3 font-medium leading-relaxed">
+                                                {post.description}
+                                            </p>
+                                        )}
                                     </a>
 
                                     <div className="relative pt-1 sm:pt-2 w-fit">

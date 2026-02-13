@@ -6,6 +6,7 @@ const blogSchema = new mongoose.Schema({
     date: { type: String },
     thumbnail: { type: String },
     link: { type: String, required: true },
+    description: { type: String },
 }, { timestamps: true });
 
 const Blog = mongoose.model("Blog", blogSchema);

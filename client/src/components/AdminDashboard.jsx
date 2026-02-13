@@ -22,6 +22,7 @@ const AdminDashboard = () => {
         episode: '',
         date: '',
         link: '',
+        description: '',
     });
     const [file, setFile] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -69,7 +70,7 @@ const AdminDashboard = () => {
         if (activeTab === 'inventory') {
             setFormData({ name: '', description: '', category: '', subCategory: '', price: '', stock: '' });
         } else {
-            setBlogFormData({ title: '', episode: '', date: '', link: '' });
+            setBlogFormData({ title: '', episode: '', date: '', link: '', description: '' });
         }
         setFile(null);
     };
@@ -277,6 +278,10 @@ const AdminDashboard = () => {
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 ml-1">Video/Article Link</label>
                                             <input name="link" className="w-full bg-slate-100 border border-slate-200 focus:bg-white focus:border-blue-500 p-4 rounded-xl text-sm placeholder:text-slate-400" placeholder="https://youtube.com/..." value={blogFormData.link} onChange={handleInputChange} required />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 ml-1">Blog Description</label>
+                                            <textarea name="description" rows="3" className="w-full bg-slate-100 border border-slate-200 focus:bg-white focus:border-blue-500 p-4 rounded-xl text-sm placeholder:text-slate-400" placeholder="Short summary of the blog..." value={blogFormData.description} onChange={handleInputChange} />
                                         </div>
                                     </>
                                 )}

@@ -2,20 +2,10 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import authority from "../assets/authority.png";
-import appDesign from "../assets/appDesign.png";
-import psImg from "../assets/psImg.png";
-import commitApp from "../assets/commitApp.png"
 import { useNavigate } from "react-router-dom";
-import Pagination from "../components/Pagination";
 import userImage from "../assets/userImage.png"
-import blogVideo from "../assets/blogVideo.jpg"
-import lothal from "../assets/lothal.png"
-import literature from "../assets/literaturre.jpg"
 import api from '../api/axios';
 
-
-// Animation Variants
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
@@ -31,46 +21,6 @@ const staggerContainer = {
     }
 };
 
-const PRODUCTS = [
-    { title: "THE APP DESIGN HANDBOOK", img: appDesign, link: "/books/app-design" },
-    { title: "DESIGNING WEB APPLICATIONS", img: psImg, link: "/books/web-apps" },
-    { title: "PHOTOSHOP FOR WEB DESIGN", img: commitApp, link: "/books/photoshop" }
-];
-
-const posts = [
-    {
-        id: 1,
-        title: "The Architecture of Silence: Lessons from Ancient Stepwells",
-        episode: "Essay 114",
-        date: "February 5, 2026",
-        thumbnail: lothal,
-        link: "#"
-    },
-    {
-        id: 2,
-        title: "Why Indian Regional Literature is the Next Global Frontier",
-        episode: "Essay 113",
-        date: "January 29, 2026",
-        thumbnail: literature,
-        link: "#"
-    },
-    {
-        id: 3,
-        title: "Crafting Characters: How Mumbai’s Local Trains Shape My Prose",
-        episode: "Essay 112",
-        date: "January 22, 2026",
-        thumbnail: lothal,
-        link: "#"
-    },
-    {
-        id: 4,
-        title: "The Writer’s Routine: Balancing Heritage and the Digital Age",
-        episode: "Essay 111",
-        date: "January 15, 2026",
-        thumbnail: literature,
-        link: "#"
-    }
-];
 
 export default function Home() {
     const navigate = useNavigate();
@@ -182,7 +132,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* Intro Section - Adjusted margins */}
+            {/* Intro Section */}
             <motion.div
                 initial="hidden"
                 whileInView="visible"
@@ -227,7 +177,7 @@ export default function Home() {
                 </div>
             </motion.div>
 
-            {/* Kit Founder Section - Adjusted padding */}
+            {/* Kit Founder Section */}
             <motion.section
                 initial="hidden"
                 whileInView="visible"
@@ -384,7 +334,7 @@ export default function Home() {
                                         {blogs[0].title}
                                     </h3>
                                     <p className="text-slate-500 text-lg leading-relaxed max-w-2xl line-clamp-2">
-                                        Check out the latest update and deep dive into our most recent story.
+                                        {blogs[0].description || "Check out the latest update and deep dive into our most recent story."}
                                     </p>
                                 </div>
                             </motion.div>

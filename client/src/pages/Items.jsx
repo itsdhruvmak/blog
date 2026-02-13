@@ -1,9 +1,6 @@
 import api from "../api/axios";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import appDesign from "../assets/appDesign.png";
-import commit from "../assets/commitApp.png";
-import psImg from "../assets/psImg.png";
 import { ArrowRight, Loader2, ShoppingCart, CheckCircle2 } from "lucide-react";
 import poetryBookImg from "../assets/robin.jpg";
 import essaySeriesImg from "../assets/discover.jpg";
